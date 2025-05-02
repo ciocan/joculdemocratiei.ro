@@ -14,6 +14,37 @@ Scopul jocului este de a educa despre procesul democratic, de a încuraja gândi
 4. **Rezultate**: Se calculează scorurile și se afișează clasamentul
 5. **Runde multiple**: Jocul continuă pentru 3 runde cu teme diferite
 
+## Cum au fost culese datele pentru mesajele candidatilor
+
+A fost folosit modelul o3 cu Deep Research de la ChatGPT pentru a gasit mesajele candidatilor.
+Am folosit urmatorul template:
+
+```
+Candidat la alegerile prezidenţiale: Nicusor Dan
+Topic: Diplomatie  
+Întrebare-cheie: „Cum veți consolida relațiile cu vecinii României într-un context regional tensionat?”
+
+Găsește exact 10 declarații publice (2022-2025) care răspund la întrebare.
+Pentru fiecare:
+• 15-25 cuvinte, rezumat fidel sau citat scurt  
+• isRisky = true dacă include controlul prețurilor / naționalizări / plafonări; altfel false  
+• Sursa: link + dată
+
+- doar in limba romana, 
+- pot fi extrase din orice sursa reputabila
+- si opinii indirecte
+- pot fi parafrazari directe care au legatura cu tema si sunt apropiate foarte mult de intrebare
+
+Returnează ca JSON array, cu obiecte cu proprietatile {id, isRisky, source, date, quote}
+- la sursa pune link-ul URL gasit
+- data formatata DD.LL.YYYY
+- id de forma "1", "2", "3" ... formatat ca string
+```
+
+Apoi am iterat pentru fiecare canditat si topic.
+Toate declarațiile au fost puse in [shared/utils/src/research-data/candidate-responses/](./shared/utils/src/research-data/candidate-responses)
+
+
 ## Instalare și rulare locală
 
 ### Cerințe preliminare
