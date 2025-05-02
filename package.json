@@ -16,7 +16,13 @@
     "typecheck": "pnpm turbo typecheck",
     "cf-typegen": "turbo cf-typegen",
     "scc": "scc -i ts,tsx --no-cocomo --exclude-dir='public,dist,.output,.turbo,.vinxi,.wrangler'",
-    "lt:start": "lt --port 4200 --subdomain joculdemocratiei"
+    "lt:start": "lt --port 4200 --subdomain joculdemocratiei",
+    "deploy:prod:app": "pnpm --filter=@joculdemocratiei/app run deploy:prod",
+    "deploy:prod:gs": "pnpm --filter=@joculdemocratiei/game-server run deploy:prod",
+    "deploy:prod:gb": "pnpm --filter=@joculdemocratiei/game-backend run deploy:prod",
+    "deploy:dev:app": "pnpm --filter=@joculdemocratiei/app run deploy:dev",
+    "deploy:dev:gs": "pnpm --filter=@joculdemocratiei/game-server run deploy:dev",
+    "deploy:dev:gb": "pnpm --filter=@joculdemocratiei/game-backend run deploy:dev"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
