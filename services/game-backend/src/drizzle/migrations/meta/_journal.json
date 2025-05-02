@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1745391148110,
+      "tag": "0000_giant_richard_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1745835277599,
+      "tag": "0001_friendly_saracen",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1745853977508,
+      "tag": "0002_mean_nicolaos",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1745939428130,
+      "tag": "0003_deep_sabra",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1745941141507,
+      "tag": "0004_mysterious_warpath",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1745954967281,
+      "tag": "0005_smart_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1746012110489,
+      "tag": "0006_melodic_namorita",
+      "breakpoints": true
+    }
+  ]
+}

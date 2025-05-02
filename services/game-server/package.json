@@ -1,0 +1,36 @@
+{
+  "name": "@joculdemocratiei/game-server",
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "types": "./dist/index.d.mts",
+  "exports": "./dist/index.mjs",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts --port=4201 --env local",
+    "deploy:dev": "wrangler deploy --env dev",
+    "deploy:prod": "wrangler deploy --env production",
+    "lint": "biome lint ./src",
+    "check-types": "tsc --noEmit",
+    "fmt": "biome format --write ./src",
+    "clean": "pnpx rimraf node_modules .turbo dist",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.3",
+    "@joculdemocratiei/game-backend": "workspace:*",
+    "@joculdemocratiei/utils": "workspace:*",
+    "@tsndr/cloudflare-worker-jwt": "^3.1.4",
+    "@typeschema/main": "^0.14.1",
+    "@typeschema/zod": "^0.14.0",
+    "hono": "^4.7.8",
+    "wrangler": "^4.14.1",
+    "xstate": "^5.19.2",
+    "zod": "^3.24.3"
+  }
+}

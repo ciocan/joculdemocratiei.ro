@@ -1,0 +1,7 @@
+JWT_SECRET=
+
+LOCAL_DB_PATH=.wrangler/state/v3/d1/miniflare-D1DatabaseObject
+
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_API_TOKEN=
+DB_ID=

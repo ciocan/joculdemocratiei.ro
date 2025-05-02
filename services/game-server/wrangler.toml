@@ -1,0 +1,91 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "jd-game-server"
+main = "src/index.ts"
+compatibility_date = "2025-04-28"
+compatibility_flags = [ "nodejs_compat" ]
+logpush = true
+
+workers_dev = false
+
+[env.dev]
+routes = [
+  { pattern = "dev.gs.joculdemocratiei.ro", custom_domain = true, zone_name = "joculdemocratiei.ro" }
+]
+
+[env.production]
+routes = [
+  { pattern = "gs.joculdemocratiei.ro", custom_domain = true, zone_name = "joculdemocratiei.ro" }
+]
+
+[observability]
+enabled = true
+
+[[services]]
+binding     = "GAME_BACKEND"
+service     = "jd-game-backend"
+
+[[env.production.services]]
+binding     = "GAME_BACKEND"
+service     = "jd-game-backend-production"
+
+[[env.dev.services]]
+binding     = "GAME_BACKEND"
+service     = "jd-game-backend-dev"
+
+[[env.local.services]]
+binding     = "GAME_BACKEND"
+service     = "jd-game-backend-local"
+
+[[durable_objects.bindings]]
+name = "MATCHMAKER"
+class_name = "Matchmaker"
+
+[[durable_objects.bindings]]
+name = "DEBATE_ROOMS"
+class_name = "DebateRoom"
+
+[[env.production.durable_objects.bindings]]
+name = "MATCHMAKER"
+class_name = "Matchmaker"
+
+[[env.production.durable_objects.bindings]]
+name = "DEBATE_ROOMS"
+class_name = "DebateRoom"
+
+[[env.dev.durable_objects.bindings]]
+name = "MATCHMAKER"
+class_name = "Matchmaker"
+
+[[env.dev.durable_objects.bindings]]
+name = "DEBATE_ROOMS"
+class_name = "DebateRoom"
+
+[[env.local.durable_objects.bindings]]
+name = "MATCHMAKER"
+class_name = "Matchmaker"
+
+[[env.local.durable_objects.bindings]]
+name = "DEBATE_ROOMS"
+class_name = "DebateRoom"
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = [ "Matchmaker", "DebateRoom" ]
+
+[[env.production.unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "4201"
+simple = { limit = 100, period = 60 }
+
+[[env.dev.unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "4201"
+simple = { limit = 100, period = 60 }
+
+[[env.local.unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "4201"
+simple = { limit = 10, period = 60 }

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env", ".env.local"],
+  "globalPassThroughEnv": [
+    "TURNSTILE_SECRET_KEY",
+    "CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_API_TOKEN",
+    "JWT_SECRET",
+    "LOCAL_DB_PATH",
+    "PUBLIC_API_URL",
+    "PUBLIC_TURNSTILE_SITE_KEY"
+  ],
+  "tasks": {
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "lint": {},
+    "cf-typegen": {}
+  }
+}

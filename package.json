@@ -1,0 +1,28 @@
+{
+  "name": "joculdemocratiei-ro",
+  "version": "0.1.0",
+  "description": "Jocul Democratiei",
+  "workspaces": ["services/*", "shared/*"],
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -- turbo dev --ui=tui",
+    "build": "dotenv -- turbo run build",
+    "build:clean": "pnpm clean && pnpm install && pnpm build",
+    "build:dev": "dotenv -- turbo build:dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "clean": "pnpx rimraf pnpm-lock.yaml --glob **/node_modules **/dist **/.cache **/.turbo **/.wrangler **/.output **/.winxi",
+    "fmt": "turbo fmt",
+    "typecheck": "pnpm turbo typecheck",
+    "cf-typegen": "turbo cf-typegen",
+    "scc": "scc -i ts,tsx --no-cocomo --exclude-dir='public,dist,.output,.turbo,.vinxi,.wrangler'",
+    "lt:start": "lt --port 4200 --subdomain joculdemocratiei"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "dependency-cruiser": "^16.10.1",
+    "dotenv-cli": "^8.0.0",
+    "turbo": "2.5.2"
+  },
+  "packageManager": "pnpm@10.8.1"
+}
