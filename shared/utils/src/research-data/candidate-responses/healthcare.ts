@@ -354,7 +354,96 @@ export const candidateResponses: CandidateResponses = {
   ],
   terhes: [],
   sandru: [],
-  ponta: [],
+  ponta: [
+    {
+      id: "1",
+      quote:
+        "Banii erau alocați - totul era gata de pornire. Au trecut 7 ani și s-au făcut ZERO spitale.",
+      isRisky: false,
+      source:
+        "https://cronicaromana.net/2022/07/16/ponta-trage-un-semnal-de-alarma-este-mare-nevoie-de-spitale-mult-mai-mare-decat-de-avioane-si-tancuri/",
+      date: "16.07.2022",
+    },
+    {
+      id: "2",
+      quote:
+        "Sănătatea este un domeniu în care am investit mulți bani și rezultatele au fost foarte slabe.",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/2025/04/26/prezidentiale2025-interviu-victor-ponta-proiectul-meu-de-tara---romania-sa-isi-stabileasca-propriile--1443410",
+      date: "26.04.2025",
+    },
+    {
+      id: "3",
+      quote: "Am avut grijă ca toți oamenii să fie îngrijiți aici, în România, nu în străinătate.",
+      isRisky: false,
+      source:
+        "https://b1tv.ro/politica/victor-ponta-se-lauda-cu-realizarile-sale-din-sanatate-ce-omite-sa-le-spuna-romanilor-1580398.html",
+      date: "29.04.2025",
+    },
+    {
+      id: "4",
+      quote:
+        "Sănătatea și educația sunt prioritare, iar serviciile medicale trebuie să fie mult mai ușor accesibile.",
+      isRisky: false,
+      source:
+        "https://b1tv.ro/politica/victor-ponta-se-lauda-cu-realizarile-sale-din-sanatate-ce-omite-sa-le-spuna-romanilor-1580398.html",
+      date: "29.04.2025",
+    },
+    {
+      id: "5",
+      quote:
+        "Cred că serviciile medicale trebuie să fie mult mai ușor accesibile, iar banii cotizați de români să fie utilizați pentru servicii de sănătate potrivit contribuției.",
+      isRisky: false,
+      source:
+        "https://hotnews.ro/a-doua-dezbatere-electorala-organizata-astazi-de-tvr-cu-toti-cei-11-candidati-la-alegerile-prezidentiale-la-ce-alte-posturi-tv-va-putea-fi-vazuta-confruntarea-1957829",
+      date: "01.05.2025",
+    },
+    {
+      id: "6",
+      quote:
+        "Propun reforme pentru modernizarea sistemului medical, creșterea accesului la servicii medicale și eliminarea risipei din sistem.",
+      isRisky: false,
+      source:
+        "https://romanian-networking.ro/romanian-networking-parteneriate-si-oportunitati-resurse-pentru-afaceri-afaceri-locale/victor-ponta-candidat-la-presedintia-romaniei-sustinut-de-eugen-teodorovici-o-sanatate-mai-buna-pentru-romania/",
+      date: "29.04.2025",
+    },
+    {
+      id: "7",
+      quote:
+        "Propun reglementarea prețurilor medicamentelor, pentru a reduce costurile și a asigura accesul pacienților la tratamente.",
+      isRisky: true,
+      source:
+        "https://romanian-networking.ro/romanian-networking-parteneriate-si-oportunitati-resurse-pentru-afaceri-afaceri-locale/victor-ponta-candidat-la-presedintia-romaniei-sustinut-de-eugen-teodorovici-o-sanatate-mai-buna-pentru-romania/",
+      date: "29.04.2025",
+    },
+    {
+      id: "8",
+      quote:
+        "Sistemul medical trebuie reorientat către prevenție, punând accent pe o asistență primară eficientă și accesibilă populației.",
+      isRisky: false,
+      source:
+        "https://romanian-networking.ro/romanian-networking-parteneriate-si-oportunitati-resurse-pentru-afaceri-afaceri-locale/victor-ponta-candidat-la-presedintia-romaniei-sustinut-de-eugen-teodorovici-o-sanatate-mai-buna-pentru-romania/",
+      date: "29.04.2025",
+    },
+    {
+      id: "9",
+      quote:
+        "Ca prim-ministru, am majorat salariile rezidenților și am susținut plata separată a gărzilor. Ca președinte, voi sprijini tinerii medici să rămână în țară.",
+      isRisky: false,
+      source: "https://x.com/Victor_Ponta/status/1904221559717351503",
+      date: "24.03.2025",
+    },
+    {
+      id: "10",
+      quote:
+        "O sănătate mai bună pentru România este obiectivul meu, pe care îl voi atinge prin reforme.",
+      isRisky: false,
+      source:
+        "https://romanian-networking.ro/romanian-networking-parteneriate-si-oportunitati-resurse-pentru-afaceri-afaceri-locale/victor-ponta-candidat-la-presedintia-romaniei-sustinut-de-eugen-teodorovici-o-sanatate-mai-buna-pentru-romania/",
+      date: "29.04.2025",
+    },
+  ],
   popescu: [],
   predoiu: [],
   banu: [],

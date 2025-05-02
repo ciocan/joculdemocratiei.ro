@@ -355,7 +355,98 @@ export const candidateResponses: CandidateResponses = {
   ],
   terhes: [],
   sandru: [],
-  ponta: [],
+  ponta: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://www.stiridecluj.ro/politic/victor-ponta-presedintele-care-conduce-nu-joaca-roluri",
+      date: "01.05.2025",
+      quote:
+        "Voi opri risipa banilor publici, ca să avem din nou bani pentru școli, spitale și drumuri.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://www.bzi.ro/victor-ponta-anunta-dezastrul-guvernului-psd-pnl-udmr-doar-18-au-atras-bani-din-fonduri-europene-5232718",
+      date: "15.04.2025",
+      quote:
+        "Din banii europeni 2021–2027, educația a atras doar 0,7%, iar sănătatea, energia și digitalizarea 0%. E inadmisibil!",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source:
+        "https://www.profit.ro/stiri/politic/ponta-alege-exclamand-scoala-de-stat-dar-admite-ca-cei-trei-copii-ai-sai-au-invatat-la-scoli-private-22000645",
+      date: "12.04.2025",
+      quote:
+        "Școală de stat, dacă asigurăm condiții: disciplină, respectarea regulilor (fără telefon) și protecția profesorilor de violențe și droguri.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source:
+        "https://www.gandul.ro/emisiuni/marius-tuca-show/victor-ponta-in-educatie-este-un-dezastru-profesorii-sunt-indreptatiti-sa-faca-greva-19983152",
+      date: "22.05.2023",
+      quote:
+        "În sistemul educațional este un dezastru. Educația primește acum cel mai mic procent din PIB, iar profesorii au salarii de nimic.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source:
+        "https://www.gandul.ro/emisiuni/marius-tuca-show/victor-ponta-in-educatie-este-un-dezastru-profesorii-sunt-indreptatiti-sa-faca-greva-19983152",
+      date: "22.05.2023",
+      quote:
+        "În pandemie nu s-a făcut deloc școală – au rămas copii analfabeți. Nimeni n-a protestat atunci, deși era grav.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source:
+        "https://zin.ro/31/05/2023/administratie/victor-ponta-despre-greva-din-educatie-daca-nu-ai-mai-multi-bani-taci/",
+      date: "31.05.2023",
+      quote:
+        "Cum să le spui profesorilor să stea liniștiți că rezolvă Legea salarizării? E o minciună. Rezolvați acum!",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source:
+        "https://www.gandul.ro/emisiuni/marius-tuca-show/victor-ponta-in-educatie-este-un-dezastru-profesorii-sunt-indreptatiti-sa-faca-greva-19983152",
+      date: "22.05.2023",
+      quote:
+        "Nu poți trăi cu un salariu de 2.500 lei; profesorii chiar au dreptate. Meseria de profesor e foarte grea.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source:
+        "https://www.euronews.ro/articole/victor-ponta-romania-intr-o-criza-fara-precedent-trebuie-resetat-si-repornit-tot",
+      date: "12.03.2025",
+      quote:
+        "Sprijinim integrarea copiilor născuți în străinătate în școlile din România, ca parte a întoarcerii familiilor din diaspora.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source:
+        "https://www.educatieprivata.ro/victor-ponta-in-calitatea-mea-de-parinte-consider-ca-scoala-online-are-rezultate-dezastruoase/",
+      date: "05.01.2022",
+      quote:
+        "Școala online a avut rezultate dezastruoase pentru elevi și profesori, mai ales la clasele primare și gimnaziale.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source:
+        "https://www.euronews.ro/articole/victor-ponta-romania-intr-o-criza-fara-precedent-trebuie-resetat-si-repornit-tot",
+      date: "12.03.2025",
+      quote:
+        "Trebuie să aducem românii din diaspora acasă, oferindu-le condiții să prospere aici alături de familiile lor.",
+    },
+  ],
   popescu: [],
   predoiu: [],
   banu: [],

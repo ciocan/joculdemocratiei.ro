@@ -366,7 +366,98 @@ export const candidateResponses: CandidateResponses = {
   ],
   terhes: [],
   sandru: [],
-  ponta: [],
+  ponta: [
+    {
+      id: "1",
+      quote:
+        "Pentru o situație de urgență mi-aș suna vecinii să mă ajute, așa cum și noi i-am ajutat pe ei.",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/29/prezidentiale2025---dezbatere-tv-ponta-in-cazul-unei-amenintari-militare-as-contacta-in-primul-rand---1444384",
+      date: "29.04.2025",
+    },
+    {
+      id: "2",
+      quote:
+        "România a avut mereu doar doi vecini buni: Serbia și Marea Neagră. Cu Serbia n-am fost niciodată în conflict.",
+      isRisky: false,
+      source:
+        "https://www.fanatik.ro/victor-ponta-renunta-la-cetatenia-onorifica-a-serbiei-romania-va-fi-intotdeauna-pe-primul-loc-21083706",
+      date: "15.03.2025",
+    },
+    {
+      id: "3",
+      quote:
+        "Dacă voi fi ales președinte, voi opri exporturile de cereale ucrainene prin porturile românești, pentru a proteja fermierii noștri.",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/ponta-ameninta-cu-stoparea-exporturilor-de-cereale-2434548.html",
+      date: "07.04.2025",
+    },
+    {
+      id: "4",
+      quote:
+        "Voi menține sprijinul pentru Ucraina (tranzit de armament, instruirea piloților), însă fără implicarea directă a armatei române în conflict.",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/ponta-ameninta-cu-stoparea-exporturilor-de-cereale-2434548.html",
+      date: "07.04.2025",
+    },
+    {
+      id: "5",
+      quote:
+        "România trebuie să ajute militar Moldova să se apere. Am sprijinit Ucraina; cum să nu ajutăm țara noastră soră?",
+      isRisky: false,
+      source:
+        "https://psnews.ro/victor-ponta-raspuns-ferm-daca-rusia-ataca-moldova-romania-trebuie-sa-ajute-militar/",
+      date: "01.05.2025",
+    },
+    {
+      id: "6",
+      quote:
+        "România poate sprijini Moldova în caz de agresiune. Realist vorbind, nu poate face asta pentru altă țară, dar pentru Moldova are această capacitate.",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/ponta-ameninta-cu-stoparea-exporturilor-de-cereale-2434548.html",
+      date: "07.04.2025",
+    },
+    {
+      id: "7",
+      quote:
+        "Mă voi concentra pe integrarea Republicii Moldova și a Balcanilor de Vest în UE, precum și pe consolidarea parteneriatelor strategice cu Polonia și Turcia.",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/ponta-ameninta-cu-stoparea-exporturilor-de-cereale-2434548.html",
+      date: "07.04.2025",
+    },
+    {
+      id: "8",
+      quote:
+        "Vecinul cu care ne-am ciondănit cel mai tare și care ne-a făcut cele mai multe probleme este Ucraina.",
+      isRisky: false,
+      source:
+        "https://www.gandul.ro/emisiuni/marius-tuca-show/video-victor-ponta-dupa-1990-romania-a-avut-mai-multe-raporturi-cu-vecinii-19931131",
+      date: "22.02.2023",
+    },
+    {
+      id: "9",
+      quote:
+        "România va fi întotdeauna pe primul loc. Dumnezeu să binecuvânteze poporul român și poporul sârb deopotrivă!",
+      isRisky: false,
+      source:
+        "https://www.fanatik.ro/victor-ponta-renunta-la-cetatenia-onorifica-a-serbiei-romania-va-fi-intotdeauna-pe-primul-loc-21083706",
+      date: "15.03.2025",
+    },
+    {
+      id: "10",
+      quote:
+        "Cu bulgarii avem o relație ciudată: practic nu avem nimic nici de certat, nici de împăcat.",
+      isRisky: false,
+      source:
+        "https://www.gandul.ro/emisiuni/marius-tuca-show/video-victor-ponta-dupa-1990-romania-a-avut-mai-multe-raporturi-cu-vecinii-19931131",
+      date: "22.02.2023",
+    },
+  ],
   popescu: [],
   predoiu: [],
   banu: [],

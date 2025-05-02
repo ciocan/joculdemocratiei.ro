@@ -365,7 +365,98 @@ export const candidateResponses: CandidateResponses = {
   ],
   terhes: [],
   sandru: [],
-  ponta: [],
+  ponta: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/27/prezidentiale2025-ponta-recastigarea-increderii-printr-un-acord-politic-privind-inghetarea-taxelor--1443595",
+      date: "27.04.2025",
+      quote:
+        "Propun un moratoriu politic privind înghețarea TVA și a celorlalte taxe până la 31 decembrie 2026, pentru stabilitate și predictibilitate.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/27/prezidentiale2025-ponta-recastigarea-increderii-printr-un-acord-politic-privind-inghetarea-taxelor--1443595",
+      date: "27.04.2025",
+      quote:
+        "Voi decide oprirea importului de produse agroalimentare din Ucraina, cel puțin până la 31 decembrie 2025, pentru a relansa agricultura României.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/27/prezidentiale2025-ponta-recastigarea-increderii-printr-un-acord-politic-privind-inghetarea-taxelor--1443595",
+      date: "27.04.2025",
+      quote:
+        "Noul guvern trebuie să reintroducă facilitățile eliminate în IT, agricultură și construcții – motoare care aduceau dezvoltare, venituri la buget și locuri de muncă.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/27/prezidentiale2025-ponta-recastigarea-increderii-printr-un-acord-politic-privind-inghetarea-taxelor--1443595",
+      date: "27.04.2025",
+      quote:
+        "România are un deficit record (2,3% din PIB în primul trimestru) deși au fost înghețate pensiile și salariile și s-au mărit taxele.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/27/prezidentiale2025-ponta-recastigarea-increderii-printr-un-acord-politic-privind-inghetarea-taxelor--1443595",
+      date: "27.04.2025",
+      quote:
+        "Investițiile străine au scăzut. Nimeni nu investește într-o țară care schimbă legislația fiscală peste noapte și nu oferă stabilitate și predictibilitate.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source:
+        "https://www.romaniatv.net/exclusiv-victor-ponta-avertisment-despre-indatorarea-romaniei-putem-sa-triplam-pensiile-dar-nu-mai-raman-tinerii-in-tara_6412493.html",
+      date: "14.04.2022",
+      quote:
+        "Problema principală e că România nu mai produce nimic. Nu mai avem producție de îngrășăminte, nu se mai fabrică tablă, sârmă, bitum, cuie – nimic!",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source:
+        "https://www.romaniatv.net/exclusiv-victor-ponta-avertisment-despre-indatorarea-romaniei-putem-sa-triplam-pensiile-dar-nu-mai-raman-tinerii-in-tara_6412493.html",
+      date: "14.04.2022",
+      quote:
+        "Putem să triplăm pensiile, dar nu mai rămân tinerii în țară. Cine va plăti datoriile? Cei care ne împrumută vor banii înapoi, cu dobândă.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source:
+        "https://www.capital.ro/romania-intra-in-colaps-avertisment-in-direct-la-tv-ne-indreptam-spre-o-criza-mult-mai-mare.html",
+      date: "29.04.2025",
+      quote:
+        "România se îndreaptă cu o viteză uriașă spre o criză economică mult mai mare decât cea din 2010.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/alegeri-prezidentiale-2025/interviu-victor-ponta-candidat-la-prezidentiale-2434804.html",
+      date: "09.04.2025",
+      quote:
+        'Sunt premierul care a redus TVA, impozitul pe dividende și contribuțiile sociale. Firmele românești spun că "Codul lui Ponta" a fost cel mai bun pentru ele.',
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source:
+        "https://www.newsbucovina.ro/exclusiv/408624/victor-ponta-dupa-discutii-cu-localnici-din-partesti-romanii-s-ar-intoarce-acasa-daca-le-am-oferi-conditii-ca-in-occident-nu-avem-nevoie-de-emigranti-ci-de-romanii-nostri",
+      date: "15.04.2025",
+      quote:
+        "Ar trebui să aducem un milion de români acasă și să le arătăm că pot trăi decent aici, fără pile ori relații.",
+    },
+  ],
   popescu: [],
   predoiu: [],
   banu: [],

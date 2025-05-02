@@ -365,7 +365,97 @@ export const candidateResponses: CandidateResponses = {
   ],
   terhes: [],
   sandru: [],
-  ponta: [],
+  ponta: [
+    {
+      id: "1",
+      isRisky: false,
+      quote:
+        "Drogurile și corupția sunt cele două cancere ale României moderne și vor fi tratate ca atare, fără jumătăți de măsură.",
+      source:
+        "https://victorponta.ro/2025/04/07/inchisoare-pe-viata-pentru-traficantii-de-droguri-si-marii-corupti/",
+      date: "07.04.2025",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      quote:
+        "Corupția la nivel înalt nu e doar o problemă morală, ci un furt de viitor; marea corupție trebuie sancționată cu pedeapsa maximă: închisoare pe viață.",
+      source:
+        "https://victorponta.ro/2025/04/07/inchisoare-pe-viata-pentru-traficantii-de-droguri-si-marii-corupti/",
+      date: "07.04.2025",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      quote:
+        "Vom face legi clare, dure și fără portițe. Pentru marea corupție nu există „reabilitare” – există pedeapsă exemplară.",
+      source:
+        "https://victorponta.ro/2025/04/07/inchisoare-pe-viata-pentru-traficantii-de-droguri-si-marii-corupti/",
+      date: "07.04.2025",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      quote:
+        "Independența magistraților trebuie garantată, însă în același timp cei care comit abuzuri trebuie să răspundă personal.",
+      source:
+        "https://adevarul.ro/alegeri-prezidentiale-2024/interviu-victor-ponta-candidat-la-prezidentiale-2434804.html",
+      date: "09.04.2025",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      quote:
+        "Cei care au făcut dosare politice să plătească din buzunar pentru abuzurile comise, nu să despăgubim victimele din buget.",
+      source:
+        "https://adevarul.ro/alegeri-prezidentiale-2024/interviu-victor-ponta-candidat-la-prezidentiale-2434804.html",
+      date: "09.04.2025",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      quote:
+        "Trebuie adoptate legi moderne care să asigure independența serviciilor de informații față de influența politicului.",
+      source:
+        "https://adevarul.ro/alegeri-prezidentiale-2024/interviu-victor-ponta-candidat-la-prezidentiale-2434804.html",
+      date: "09.04.2025",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      quote:
+        "Consider că trebuie revizuită Constituția, iar atribuțiile Curții Constituționale să fie mult mai clar definite.",
+      source:
+        "https://agerpres.ro/politic/2025/04/26/prezidentiale2025-interviu-victor-ponta-proiectul-meu-de-tara---romania-sa-isi-stabileasca-propriile--1443410",
+      date: "26.04.2025",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      quote:
+        "Priorități: restabilirea încrederii în vot prin desecretizarea documentelor despre anularea alegerilor și un referendum care să garanteze respectarea tuturor voturilor.",
+      source:
+        "https://agerpres.ro/politic/2025/04/26/prezidentiale2025-interviu-victor-ponta-proiectul-meu-de-tara---romania-sa-isi-stabileasca-propriile--1443410",
+      date: "26.04.2025",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      quote:
+        "Nu va mai exista niciun dosar politic. Cine încalcă legea merge la închisoare, iar traficanții de droguri și marii corupți primesc închisoare pe viață.",
+      source:
+        "https://www.fanatik.ro/cum-va-putea-inchide-victor-ponta-toate-dosarele-politice-in-calitate-de-presedinte-voi-avea-dreptul-21093654",
+      date: "25.03.2025",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      quote:
+        "Niciun partid nu va confisca instituțiile statului în interes propriu; guvernul va răspunde doar în fața cetățenilor, nu în fața unor grupuri de partid corupte.",
+      source: "https://victorponta.ro/2025/04/07/government-policy/",
+      date: "07.04.2025",
+    },
+  ],
   popescu: [],
   predoiu: [],
   banu: [],
