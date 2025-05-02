@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heading, Button, Flex, Grid, Card, Text, Avatar, Callout } from "@radix-ui/themes";
+import { Heading, Button, Flex, Grid, Card, Text, Avatar } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageCircleIcon, UsersIcon, TrophyIcon } from "lucide-react";
 import { useState, useRef } from "react";
 
 import { shuffledCandidates } from "@joculdemocratiei/utils";

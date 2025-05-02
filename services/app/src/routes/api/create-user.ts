@@ -10,7 +10,7 @@ import { env as appEnv } from "@/env";
 
 export const APIRoute = createAPIFileRoute("/api/create-user")({
   POST: async ({ request }) => {
-    const { env, cf } = request.context.cloudflare;
+    const { env } = request.context.cloudflare;
     const user = await request.json<UserProfile>();
 
     const rateLimited = await checkRateLimit(request);
@@ -20,7 +20,9 @@ export const APIRoute = createAPIFileRoute("/api/create-user")({
     }
 
     try {
-      await env.GAME_BACKEND.createUser(user);
+      if (user.firstName !== "Anonim" && user.lastName !== "Anonim") {
+        await env.GAME_BACKEND.createUser(user);
+      }
     } catch (error) {
       console.error("error", error);
       return json({ error: "Failed to create user" }, { status: 500 });

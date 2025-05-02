@@ -50,7 +50,7 @@ VITE_API_URL = "http://localhost:4201/api"
 name = "RATE_LIMITER"
 type = "ratelimit"
 namespace_id = "4200"
-simple = { limit = 3, period = 60 }
+simple = { limit = 100, period = 60 }
 
 [[env.production.unsafe.bindings]]
 name = "RATE_LIMITER"
@@ -68,4 +68,4 @@ simple = { limit = 100, period = 60 }
 name = "RATE_LIMITER"
 type = "ratelimit"
 namespace_id = "4200"
-simple = { limit = 3, period = 60 }
+simple = { limit = 100, period = 60 }

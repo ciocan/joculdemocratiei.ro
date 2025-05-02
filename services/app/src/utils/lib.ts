@@ -3,8 +3,6 @@ import { twMerge } from "tailwind-merge";
 import { json } from "@tanstack/react-start";
 import ky from "ky";
 
-import type { EnvVars } from "env";
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
