@@ -460,5 +460,88 @@ export const candidateResponses: CandidateResponses = {
   popescu: [],
   predoiu: [],
   banu: [],
-  funeriu: [],
+  funeriu: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/30/prezidentiale2025---dezbatere-tv-funeriu-guvernul-si-toate-institutiile-pot-functiona-cu-mai-putina---1444800",
+      date: "30.04.2025",
+      quote:
+        "Nicio cheltuială bugetară nu poate fi aprobată fără stabilirea sursei de finanțare. Pomenile electorale de aici vin.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/30/prezidentiale2025---dezbatere-tv-funeriu-guvernul-si-toate-institutiile-pot-functiona-cu-mai-putina---1444800",
+      date: "30.04.2025",
+      quote:
+        "Guvernul și instituțiile publice pot funcționa cu mai puțini angajați; banii economisiți astfel nu ajung, avem 9 miliarde de euro necolectați din TVA.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Salariile cresc nu prin artificii politice, ci prin investiții în capitalul uman, tehnologie și organizare eficientă.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Promovăm cota unică, mijloc sigur de încurajare a investițiilor cu valoare adăugată mare.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Eliminăm barierele birocratice și sprijinim antreprenoriatul prin digitalizarea completă și simplificarea relației dintre stat și micii angajatori.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Lansăm un program național de repatriere a forței de muncă, cu garanții pentru românii care revin și creează locuri de muncă.",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Dezvoltăm domenii strategice în care România poate deveni lider regional: inginerie avansată, IT, agricultură de precizie, bioeconomie, energie regenerabilă.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Reinventăm școala profesională împreună cu mediul privat, pentru a pregăti specialiști bine plătiți, capabili să concureze la nivel european.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Asigurăm un sistem de pensii sustenabil și echitabil, acces la sănătate de calitate și programe de reconversie profesională pentru cei afectați de automatizare.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source: "https://www.funeriu.ro/economie-si-munca/",
+      date: "01.04.2025",
+      quote:
+        "Garantăm prin stat investițiile majore în zone strategice și în infrastructura economică, astfel încât fiecare județ să devină un pol de creștere.",
+    },
+  ],
 };

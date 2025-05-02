@@ -459,5 +459,96 @@ export const candidateResponses: CandidateResponses = {
   popescu: [],
   predoiu: [],
   banu: [],
-  funeriu: [],
+  funeriu: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://www.rfi.fr/ro/românia/20250407-funeriu-către-politicieni-fraților-faceți-sport-dacă-ajung-la-cotroceni-o-să-alergați-toată-ziua",
+      date: "07.04.2025",
+      quote:
+        "Miza majoră a alegerilor prezidențiale din luna mai este refondarea morală și etică a statului.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://www.capital.ro/daniel-funeriu-gradul-de-digitalizare-al-serviciilor-publice-si-al-imm-urilor-inca-mult-prea-redus.html",
+      date: "13.04.2025",
+      quote:
+        "Justiția trebuie să asigure dreptatea, iar digitalizarea ajută oamenii să comunice deschis cu statul și să-l poată verifica.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source:
+        "https://www.news.ro/politic-intern/daniel-funeriu-justitia-digitalizarea-instrumentele-baza-unui-stat-etic-sistemul-justitie-romania-continua-fie-inaccesibil-multora-gradul-digitalizare-serviciilor-publice-imm-urilor-mult-prea-redus-1922403913002025041522001306",
+      date: "13.04.2025",
+      quote:
+        "E nevoie de reforme urgente pentru a reconstrui încrederea în sistemul judiciar și a-l face accesibil tuturor cetățenilor.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source:
+        "https://www.news.ro/politic-intern/daniel-funeriu-justitia-digitalizarea-instrumentele-baza-unui-stat-etic-sistemul-justitie-romania-continua-fie-inaccesibil-multora-gradul-digitalizare-serviciilor-publice-imm-urilor-mult-prea-redus-1922403913002025041522001306",
+      date: "13.04.2025",
+      quote:
+        "Trebuie pus capăt impunității magistraților corupți, prin crearea unei unități speciale în cadrul DNA dedicată anchetării lor.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source:
+        "https://www.news.ro/politic-intern/daniel-funeriu-justitia-digitalizarea-instrumentele-baza-unui-stat-etic-sistemul-justitie-romania-continua-fie-inaccesibil-multora-gradul-digitalizare-serviciilor-publice-imm-urilor-mult-prea-redus-1922403913002025041522001306",
+      date: "13.04.2025",
+      quote:
+        "Susține o cooperare internațională sporită (Interpol, Europol) pentru combaterea corupției și repatrierea rapidă a condamnaților.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source:
+        "https://www.capital.ro/adevarul-despre-traian-basescu-funeriu-a-dezvalui-totul-daca-as-fi-avut-cea-mai-mica-dovada.html",
+      date: "03.04.2025",
+      quote:
+        "Cât timp am avut funcție publică, nu există declarație de-a mea care să facă vreun compromis cu corupția.",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/29/prezidentiale2025---dezbatere-tv-daniel-funeriu-voi-fi-un-presedinte-tamaduitor-va-propun-un-stat-ba--1444321",
+      date: "29.04.2025",
+      quote:
+        "Propune un stat bazat pe adevăr, un stat etic, care nu-și mai minte cetățenii și le dă siguranță și control asupra proceselor democratice.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/daniel-funeriu-ii-provoaca-pe-candidatii-la-2411149.html",
+      date: "26.12.2024",
+      quote:
+        "În această campanie cuvintele mele cheie sunt claritate și etică: statul să vă spună încotro mergem și să nu vă mai mintă.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source:
+        "https://www.news.ro/politic-intern/daniel-funeriu-candidat-independent-ramane-independent-emanatia-niciunui-partid-cer-judecatorilor-ccr-ii-lase-candideze-prezidentiale-toti-cei-doresc-vreau-il-inving-georgescu-alegeri-libere-1922405506002025011421889022",
+      date: "06.01.2025",
+      quote:
+        "Este un sistem defect de contraselecție, care a adus în fruntea țării elite extractive – oameni slabi ce extrag resurse pentru ei și partidul lor.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source:
+        "https://adevarul.ro/politica/daniel-funeriu-ii-provoaca-pe-candidatii-la-2411149.html",
+      date: "26.12.2024",
+      quote:
+        "În 2011, în indiferența presei, am început cruciada anti-plagiat. Astăzi, politicieni importanți tremură la auzul acestui cuvânt.",
+    },
+  ],
 };

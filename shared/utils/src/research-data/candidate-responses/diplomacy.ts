@@ -461,5 +461,96 @@ export const candidateResponses: CandidateResponses = {
   popescu: [],
   predoiu: [],
   banu: [],
-  funeriu: [],
+  funeriu: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://moldova1.md/p/48133/daniel-funeriu-r-moldova-poate-adera-mai-devreme-de-2030-daca-exista-decizii-politice-curajoase-",
+      date: "29.04.2025",
+      quote:
+        "Republica Moldova trebuie să adere la Uniunea Europeană mai repede, pe baza unor decizii politice curajoase.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://moldova1.md/p/48133/daniel-funeriu-r-moldova-poate-adera-mai-devreme-de-2030-daca-exista-decizii-politice-curajoase-",
+      date: "29.04.2025",
+      quote:
+        "Politica față de Republica Moldova se va baza pe „trecerea de la ideea de ajutor la cea de dezvoltare în comun”.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/2025/04/14/prezidentiale2025-interviu-daniel-funeriu-pentru-a-conduce-romania-e-nevoie-de-competenta-si-caracte--1440517",
+      date: "14.04.2025",
+      quote:
+        "România este un model de respect față de minorități, mai ales față de minoritatea maghiară, și vreau să perpetuăm acest model.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/2025/04/14/prezidentiale2025-interviu-daniel-funeriu-pentru-a-conduce-romania-e-nevoie-de-competenta-si-caracte--1440517",
+      date: "14.04.2025",
+      quote:
+        "România trebuie să redevină un broker de pace, un bastion al dialogului și al soluțiilor constructive.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source:
+        "https://evz.ro/funeriu-romania-trebuie-sa-fie-ultra-activa-in-a-convinge-ca-sua-si-ue-pot-si-trebuie-sa-coopereze.html",
+      date: "06.03.2025",
+      quote:
+        "România trebuie să fie parte din liantul între SUA și UE, fiind ultra-activă în a convinge că acestea pot coopera.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source:
+        "https://evz.ro/funeriu-romania-trebuie-sa-fie-ultra-activa-in-a-convinge-ca-sua-si-ue-pot-si-trebuie-sa-coopereze.html",
+      date: "06.03.2025",
+      quote:
+        "Uniunea Europeană are viitor, iar România trebuie să fie o parte puternică a acesteia. România are viitor în UE.",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source:
+        "https://evz.ro/funeriu-romania-trebuie-sa-fie-ultra-activa-in-a-convinge-ca-sua-si-ue-pot-si-trebuie-sa-coopereze.html",
+      date: "06.03.2025",
+      quote:
+        "Agresiunea Rusiei amenință toate țările, iar pacea în Ucraina înseamnă pace pentru toți, dar trebuie să fie solidă.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/30/prezidentiale2025---dezbatere-tv-funeriu-politica-externa-trebuie-adusa-la-zi-printr-un-document-sim--1444835",
+      date: "30.04.2025",
+      quote:
+        "România trebuie să creeze bogăție pentru români în afara granițelor țării, printr-o diplomație economică eficientă.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/30/prezidentiale2025---dezbatere-tv-funeriu-politica-externa-trebuie-adusa-la-zi-printr-un-document-sim--1444835",
+      date: "30.04.2025",
+      quote:
+        "NATO și Uniunea Europeană reprezintă pilonul principal al politicii externe. România va fi, în UE, avocatul unei relații transatlantice puternice.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source:
+        "https://stirileprotv.ro/alegeri/prezidentiale/2024/daniel-funeriu-propune-cresterea-cheltuielilor-pentru-aparare-la-3-5-din-pib-in-cadrul-dezbaterii-prezidentiale.html",
+      date: "29.04.2025",
+      quote:
+        "România trebuie să fie capabilă să se apere singură, de aceea susțin creșterea cheltuielilor de apărare la 3,5% din PIB.",
+    },
+  ],
 };

@@ -129,7 +129,7 @@ export const candidates: Candidate[] = [
     party: "Ind.",
     image: "/img/avatars/funeriu.jpg",
     ideology: { e: 70, s: 60, g: 50 },
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     id: "11",

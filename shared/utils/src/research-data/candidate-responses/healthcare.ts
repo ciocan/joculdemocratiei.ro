@@ -447,5 +447,88 @@ export const candidateResponses: CandidateResponses = {
   popescu: [],
   predoiu: [],
   banu: [],
-  funeriu: [],
+  funeriu: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://www.news.ro/politic-intern/interviu-funeriu-primele-actiuni-presedinte-intalnire-seful-statului-major-convocarea-ciolacu-i-spune-votul-popular-arata-prim-ministru-formula-ideala-guvernare-psd-pnl-udmr-partea-non-pucista-usr-1922403025002025041022011713",
+      date: "25.04.2025",
+      quote:
+        "Susține că printre măsurile sale prioritare se află o reformă radicală a sistemului de sănătate.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://www.agerpres.ro/politic/2025/04/29/prezidentiale2025-dezbatere-tv-funeriu-afirma-ca-statul-trebuie-refondat-pe-baza-eticii-si-a-busolei-morale--1444381",
+      date: "29.04.2025",
+      quote:
+        "Își dorește un sistem de sănătate care să asigure că atunci când ieși din spital ești vindecat, nu pe targă.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Afirmă că prevenția trebuie să devină o prioritate națională, mărind substanțial ponderea acesteia în cheltuielile de sănătate.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Promite să stimuleze producția internă de medicamente pentru a reduce dependența de importuri, să crească bugetul pentru medicamente compensate și gratuite și să digitalizeze rețetele.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Propune transformarea spitalelor în fundații, asociații sau societăți non-profit, pentru un management mai eficient.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Susține necesitatea echității salariale în sistemul medical, aliniind veniturile medicilor specialiști cu cele ale medicilor de familie.",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Consideră că fiecare român trebuie să aibă acces rapid și gratuit la serviciile medicale de care are nevoie.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Subliniază că, deși România are medici, aparatură modernă și medicamente eficiente, sistemul sanitar nu valorifică aceste resurse, iar pacienții pierd și plătesc mult din buzunar.",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Militează pentru un sistem sanitar rezilient, pregătit să facă față crizelor viitoare și epidemiilor.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source: "https://funeriu.ro/sanatate/",
+      date: "14.04.2025",
+      quote:
+        "Își propune implicarea pacienților în procesul decizional și promovarea unui sistem medical transparent și demn de încredere.",
+    },
+  ],
 };

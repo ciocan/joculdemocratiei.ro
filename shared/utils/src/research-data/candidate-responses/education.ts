@@ -450,5 +450,96 @@ export const candidateResponses: CandidateResponses = {
   popescu: [],
   predoiu: [],
   banu: [],
-  funeriu: [],
+  funeriu: [
+    {
+      id: "1",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Esența redresării este formarea inițială și continuă a profesorilor printr-o structură administrativă de elită.",
+    },
+    {
+      id: "2",
+      isRisky: false,
+      source:
+        "https://www.edupedu.ro/op-ed-daniel-funeriu-ce-e-de-facut-in-educatie-agenda-viitorului-presedinte/",
+      date: "24.05.2024",
+      quote:
+        "Copiii cu șanse scăzute – mai ales din rural – trebuie integrați în școli impecabil dotate, oferindu-le oportunități educaționale sporite.",
+    },
+    {
+      id: "3",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Eliminarea abandonului școlar prin intervenție locală: stimulente și sancțiuni pentru părinții și autoritățile locale care nu asigură școlarizarea.",
+    },
+    {
+      id: "4",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Implicarea autorităților locale în finanțarea școlilor: primăriile vor îmbunătăți infrastructura și salariile profesorilor pentru a atrage cadre de elită.",
+    },
+    {
+      id: "5",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Acces echitabil la meditații: statul oferă vouchere pentru pregătire suplimentară, astfel încât și copiii din familii cu resurse reduse să beneficieze.",
+    },
+    {
+      id: "6",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Educația merge la elevi: platformele sociale (TikTok, Instagram etc.) vor fi obligate să difuzeze conținut educațional periodic.",
+    },
+    {
+      id: "7",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Învățământul profesional și dual devine pilon de bază al educației, punând accent pe calificarea practică a elevilor.",
+    },
+    {
+      id: "8",
+      isRisky: false,
+      source:
+        "https://agerpres.ro/politic/2025/04/14/prezidentiale2025-interviu-daniel-funeriu-pentru-a-conduce-romania-e-nevoie-de-competenta-si-caracte--1440517",
+      date: "14.04.2025",
+      quote:
+        "Mesaj pentru toți copiii, bogați sau săraci: învață, ca asta să te ducă sus în viață!",
+    },
+    {
+      id: "9",
+      isRisky: false,
+      source:
+        "https://www.news.ro/stirile-zilei/daniel-funeriu-prezentat-programul-educatie-rolul-presedintelui-viziunea-mea-acela-garant-valorii-educatiei-simplu-manager-sistem-statul-acorda-vouchere-meditatii-reduceri-impozite-parinti-1922401222002025041222008974",
+      date: "22.04.2025",
+      quote:
+        "Niciun buget național nu va fi promulgat fără resurse suficiente pentru educația tuturor copiilor României.",
+    },
+    {
+      id: "10",
+      isRisky: false,
+      source:
+        "https://www.edupedu.ro/op-ed-daniel-funeriu-ce-e-de-facut-in-educatie-agenda-viitorului-presedinte/",
+      date: "24.05.2024",
+      quote:
+        "Nu e o problemă dacă decalajele rămân mari, câtă vreme nivelul celor de jos este unul bun.",
+    },
+  ],
 };
