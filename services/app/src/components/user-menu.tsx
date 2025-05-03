@@ -1,22 +1,23 @@
 import { Flex, IconButton, DropdownMenu, Avatar } from "@radix-ui/themes";
 import { ExitIcon, HomeIcon, PersonIcon } from "@radix-ui/react-icons";
+import { PaletteIcon } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 
-import { candidateAvatarUrl } from "@joculdemocratiei/utils";
+import { getCandidateAvatarUrl } from "@joculdemocratiei/utils";
 import { useUserStore } from "@/stores/user-store";
 import { gameStore } from "@/stores/game-store";
+import { useThemeStore } from "@/stores/theme-store";
 
 export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) {
   const navigate = useNavigate();
   const { user } = useUserStore();
   const gameState = gameStore.get();
   const candidateId = gameState.context.candidateId;
+  const { theme, toggleTheme } = useThemeStore();
 
   const userInitials = user ? `${user.firstName[0]}${user.lastName[0]}` : "?";
   const userName = user ? `${user.firstName} ${user.lastName}` : "Utilizator";
-  const candidateImage = candidateId
-    ? candidateAvatarUrl[candidateId as keyof typeof candidateAvatarUrl]
-    : undefined;
+  const candidateImage = candidateId ? getCandidateAvatarUrl(candidateId, theme) : undefined;
 
   const navigateToHome = () => {
     if (handleLeaveRoom) {
@@ -58,6 +59,21 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
         <DropdownMenu.Item onClick={navigateToHome}>
           <HomeIcon />
           <span className="ml-2">Pagina principală</span>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item onClick={toggleTheme}>
+          {theme === "amber" ? (
+            <PaletteIcon className="text-blue-9 size-4" />
+          ) : (
+            <PaletteIcon className="text-amber-9 size-4" />
+          )}
+          <span className="ml-2">
+            Schimbă culoare:{" "}
+            {theme === "amber" ? (
+              <span className="text-blue-9">Albastru</span>
+            ) : (
+              <span className="text-amber-9">Auriu</span>
+            )}
+          </span>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {handleLeaveRoom && (

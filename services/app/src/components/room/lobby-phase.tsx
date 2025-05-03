@@ -57,7 +57,7 @@ function InstructionsDialog() {
             </ol>
           </Flex>
           <Quote className="py-2 text-center">
-            <Text size="3" color="amber">
+            <Text size="3" className="text-accent-9">
               Nu toate opiniile sunt egale, dar fiecare vot contează
             </Text>
           </Quote>
@@ -108,7 +108,7 @@ export function LobbyPhase() {
                 className="h-[140px]"
               >
                 <Card
-                  className={`p-2 h-full ${player.isReady ? "border-2 border-amber-500" : "bg-accent-5/30"}`}
+                  className={`p-2 h-full ${player.isReady ? "border-2 border-accent-9" : "bg-accent-5/30"}`}
                 >
                   <Grid columns="1" gap="1" align="center" className="h-full">
                     <Avatar
@@ -177,7 +177,7 @@ export function LobbyPhase() {
         <Button
           size="3"
           disabled={players.length < 2 || isCurrentUserReady}
-          color="amber"
+          color="blue"
           className="px-2"
           onClick={handleReady}
         >

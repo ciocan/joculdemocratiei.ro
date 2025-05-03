@@ -105,7 +105,7 @@ export function UserLeaderboard({ userId }: { userId: string }) {
               <Table.Header>
                 <Table.Row>
                   <Table.ColumnHeaderCell align="center">
-                    <Text size="3" weight="bold" color="amber">
+                    <Text size="3" weight="bold" className="text-accent-9">
                       Joc
                     </Text>
                   </Table.ColumnHeaderCell>
@@ -119,7 +119,7 @@ export function UserLeaderboard({ userId }: { userId: string }) {
                     <AwardIcon className="text-yellow-500 size-5" />
                   </Table.ColumnHeaderCell>
                   <Table.ColumnHeaderCell align="center">
-                    <Text size="3" weight="bold" color="amber">
+                    <Text size="3" weight="bold" className="text-accent-9">
                       Total
                     </Text>
                   </Table.ColumnHeaderCell>

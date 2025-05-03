@@ -1,4 +1,5 @@
 import { shuffleArray } from "./utils";
+import { type ThemeColor, defaultTheme, getAvatarPath } from "./theme-config";
 
 export interface Ideology {
   e: number; // Economy: Left-Right
@@ -143,18 +144,42 @@ export const candidates: Candidate[] = [
   },
 ];
 
+// Function to get candidate avatar URL based on theme
+export function getCandidateAvatarUrl(
+  candidateId: string,
+  theme: ThemeColor = defaultTheme,
+): string {
+  const basePath = getAvatarPath(theme);
+  const fileName = {
+    "1": "simion.jpg",
+    "2": "antonescu.jpg",
+    "3": "lasconi.jpg",
+    "4": "terhes.jpg",
+    "5": "sandru.jpg",
+    "6": "ponta.jpg",
+    "7": "popescu.jpg",
+    "8": "predoiu.jpg",
+    "9": "banu.jpg",
+    "10": "funeriu.jpg",
+    "11": "dan.jpg",
+  }[candidateId];
+
+  return `${basePath}/${fileName}`;
+}
+
+// Legacy support for direct access (uses default theme)
 export const candidateAvatarUrl = {
-  "1": "/img/avatars/simion.jpg",
-  "2": "/img/avatars/antonescu.jpg",
-  "3": "/img/avatars/lasconi.jpg",
-  "4": "/img/avatars/terhes.jpg",
-  "5": "/img/avatars/sandru.jpg",
-  "6": "/img/avatars/ponta.jpg",
-  "7": "/img/avatars/popescu.jpg",
-  "8": "/img/avatars/predoiu.jpg",
-  "9": "/img/avatars/banu.jpg",
-  "10": "/img/avatars/funeriu.jpg",
-  "11": "/img/avatars/dan.jpg",
+  "1": getCandidateAvatarUrl("1"),
+  "2": getCandidateAvatarUrl("2"),
+  "3": getCandidateAvatarUrl("3"),
+  "4": getCandidateAvatarUrl("4"),
+  "5": getCandidateAvatarUrl("5"),
+  "6": getCandidateAvatarUrl("6"),
+  "7": getCandidateAvatarUrl("7"),
+  "8": getCandidateAvatarUrl("8"),
+  "9": getCandidateAvatarUrl("9"),
+  "10": getCandidateAvatarUrl("10"),
+  "11": getCandidateAvatarUrl("11"),
 } as const;
 
 export const candidateIdToSlugMap = candidates.reduce(

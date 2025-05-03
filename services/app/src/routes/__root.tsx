@@ -8,6 +8,7 @@ import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
 import { seo } from "@/utils/seo";
 import { GameProvider } from "@/contexts/game-context";
+import { useThemeStore } from "@/stores/theme-store";
 
 import appCss from "@/styles/app.css?url";
 import { AnonProvider } from "@/contexts/anon-provider";
@@ -71,6 +72,8 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
     <html lang="ro">
       <head>
@@ -80,7 +83,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <AnonProvider>
             <GameProvider>
-              <Theme appearance="dark" accentColor="amber" grayColor="olive" radius="full">
+              <Theme appearance="dark" accentColor={theme} grayColor="olive" radius="full">
                 <Grid
                   align="center"
                   justify="center"

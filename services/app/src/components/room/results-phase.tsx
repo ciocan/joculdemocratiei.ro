@@ -28,7 +28,8 @@ import {
   MessageCircleQuestionIcon,
 } from "lucide-react";
 
-import { candidates, candidateAvatarUrl } from "@joculdemocratiei/utils";
+import { candidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
+import { useThemeStore } from "@/stores/theme-store";
 import { useRoomResults } from "@/contexts/room-context";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { cn } from "@/utils/lib";
@@ -47,6 +48,8 @@ export function ResultsPhase() {
     cumulativeScores,
     countdown,
   } = useRoomResults();
+
+  const theme = useThemeStore((state) => state.theme);
 
   const isFinalResults = currentRound === totalRounds - 1;
   const [activeTab, setActiveTab] = useState<string>(
@@ -130,8 +133,9 @@ export function ResultsPhase() {
               medal = "🥉 Locul 3";
             }
 
-            const avatarUrl =
-              candidateAvatarUrl[player.candidateId as keyof typeof candidateAvatarUrl];
+            const avatarUrl = player.candidateId
+              ? getCandidateAvatarUrl(player.candidateId, theme)
+              : "";
 
             return (
               <motion.div
@@ -236,6 +240,7 @@ export function ResultsPhase() {
 function AllRoundsAnswers() {
   const { players, roundsData, totalRounds } = useRoomResults();
   const [expandedRound, setExpandedRound] = useState<number | null>(null);
+  const theme = useThemeStore((state) => state.theme);
 
   // Function to render vote badge based on vote type
   const renderVoteBadge = (vote: string | undefined) => {
@@ -339,9 +344,9 @@ function AllRoundsAnswers() {
                                     <Avatar
                                       size="2"
                                       src={
-                                        candidateAvatarUrl[
-                                          player.candidateId as keyof typeof candidateAvatarUrl
-                                        ]
+                                        player.candidateId
+                                          ? getCandidateAvatarUrl(player.candidateId, theme)
+                                          : ""
                                       }
                                       fallback={player.name[0] || "?"}
                                       radius="full"
@@ -355,8 +360,7 @@ function AllRoundsAnswers() {
                                   <Flex direction="column" gap="1">
                                     <Text
                                       size="2"
-                                      color="amber"
-                                      className="break-words max-w-[200px] md:max-w-none"
+                                      className="break-words max-w-[200px] md:max-w-none text-accent-9"
                                     >
                                       {answerText || "Niciun răspuns"}
                                     </Text>
@@ -432,9 +436,9 @@ function AllRoundsAnswers() {
                                   <Avatar
                                     size="2"
                                     src={
-                                      candidateAvatarUrl[
-                                        player.candidateId as keyof typeof candidateAvatarUrl
-                                      ]
+                                      player.candidateId
+                                        ? getCandidateAvatarUrl(player.candidateId, theme)
+                                        : ""
                                     }
                                     fallback={player.name[0] || "?"}
                                     radius="full"
@@ -446,7 +450,7 @@ function AllRoundsAnswers() {
 
                                 <Box className="border-t border-gray-4 pt-2">
                                   <Flex direction="column" gap="1">
-                                    <Text size="2" color="amber" className="break-words">
+                                    <Text size="2" className="break-words text-accent-9">
                                       {answerText || "Niciun răspuns"}
                                     </Text>
                                     {answerId &&

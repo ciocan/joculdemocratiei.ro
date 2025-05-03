@@ -119,7 +119,7 @@ export function VotingPhase() {
                     variant="surface"
                   >
                     <Grid gap="2">
-                      <Callout.Root size="1" variant="soft" color="amber">
+                      <Callout.Root size="1" variant="soft" className="text-accent-9">
                         <Callout.Text size="3">{answerText}</Callout.Text>
                       </Callout.Root>
                       <RadioCards.Root
@@ -157,8 +157,8 @@ export function VotingPhase() {
                             className={cn(
                               "p-2 rounded-lg border transition-all",
                               currentVote === "neutral"
-                                ? "border-amber-9 bg-amber-3"
-                                : "border-gray-6 hover:border-amber-7 hover:bg-amber-2",
+                                ? "border-accent-9 bg-accent-3"
+                                : "border-gray-6 hover:border-accent-7 hover:bg-accent-2",
                             )}
                           >
                             <Flex

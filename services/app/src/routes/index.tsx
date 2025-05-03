@@ -3,7 +3,8 @@ import { Heading, Button, Flex, Grid, Card, Text, Avatar } from "@radix-ui/theme
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef } from "react";
 
-import { shuffledCandidates } from "@joculdemocratiei/utils";
+import { shuffledCandidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
+import { useThemeStore } from "@/stores/theme-store";
 
 import { useUserStore } from "@/stores/user-store";
 import { TextAnimate } from "@/components/animations/text-animate";
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const user = useUserStore((state) => state.user);
+  const theme = useThemeStore((state) => state.theme);
   const [rotation, setRotation] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef(false);
@@ -70,7 +72,7 @@ function Home() {
               >
                 <Heading as="h1" size="6" className="text-center drop-shadow-md">
                   <TextAnimate
-                    className="text-amber-400 text-xl sm:text-3xl"
+                    className="text-accent-9 text-xl sm:text-3xl"
                     text="Jocul Democrației"
                     type="popIn"
                     delay={0.6}
@@ -149,7 +151,7 @@ function Home() {
                     >
                       <Avatar
                         size={{ initial: "4", xs: "5", md: "6" }}
-                        src={candidate.image}
+                        src={getCandidateAvatarUrl(candidate.id, theme)}
                         radius="full"
                         fallback={candidate.name.substring(0, 2)}
                         className="border-2 border-accent-5 hover:border-accent-9 transition-all hover:scale-110 cursor-pointer shadow-md overflow-hidden"
@@ -167,7 +169,7 @@ function Home() {
                 <Heading size="5" className="text-accent-11">
                   <span className="text-4xl mr-3">🎩</span>Jocul Democrației
                 </Heading>
-                <Text size="4" className="text-amber-400 font-bold mb-2">
+                <Text size="4" className="text-accent-9 font-bold mb-2">
                   Singurul joc unde câștigi puncte pentru că ai avut tupeul să fii de acord cu
                   dușmanul politic!
                 </Text>

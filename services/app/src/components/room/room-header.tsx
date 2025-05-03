@@ -40,7 +40,7 @@ export function RoomHeader({
           </Badge>
         )}
         {isPrivate && (
-          <Badge color="amber" variant="soft" size="2" className="flex items-center gap-1">
+          <Badge variant="soft" size="2" className="flex items-center gap-1 text-accent-9">
             <LockClosedIcon />
             {phase === "lobby" && "Cameră privată"}
           </Badge>
