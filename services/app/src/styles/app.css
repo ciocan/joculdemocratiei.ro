@@ -5,6 +5,23 @@
 @tailwind utilities;
 
 @layer base {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
   @font-face {
     font-family: 'Geist';
     src: url('/fonts/Geist-Light.woff2') format('woff2');

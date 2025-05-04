@@ -1,8 +1,14 @@
-import { Heading, Text, Card, Grid, Flex, Table, Badge, Skeleton } from "@radix-ui/themes";
+import { Heading, Text, Card, Grid, Flex, Table, Badge, Skeleton, Box } from "@radix-ui/themes";
 import { AwardIcon, BrainIcon, HeartIcon, TrophyIcon } from "lucide-react";
 
-import { formatNumber } from "@joculdemocratiei/utils";
+import { formatNumber, type GameData, type LeaderboardRoundScore } from "@joculdemocratiei/utils";
 import { useUserLeaderboard } from "@/hooks/use-user-leaderboard";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 export function UserLeaderboard({ userId }: { userId: string }) {
   const { leaderboardData, isLoading, error } = useUserLeaderboard({ userId });
@@ -11,7 +17,10 @@ export function UserLeaderboard({ userId }: { userId: string }) {
     return <LeaderboardSkeleton />;
   }
 
-  const hasNoData = !leaderboardData?.finalScores && !leaderboardData?.roundScores.length;
+  const hasNoData =
+    !leaderboardData?.finalScores &&
+    (!leaderboardData?.games || leaderboardData.games.length === 0) &&
+    (!leaderboardData?.roundScores || leaderboardData.roundScores.length === 0);
 
   if (error) {
     return (
@@ -95,54 +104,137 @@ export function UserLeaderboard({ userId }: { userId: string }) {
         </Card>
       )}
 
-      {leaderboardData.roundScores.length > 0 && (
+      {leaderboardData.games && leaderboardData.games.length > 0 && (
         <Card variant="classic">
           <Flex direction="column" gap="3" p="4">
             <Heading as="h3" size="3" align="center" color="gray">
               Rezultate jocuri
             </Heading>
-            <Table.Root>
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeaderCell align="center">
-                    <Text size="3" weight="bold" className="text-accent-9">
-                      Joc
-                    </Text>
-                  </Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell align="center">
-                    <BrainIcon className="text-blue-500 size-5" />
-                  </Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell align="center">
-                    <HeartIcon className="text-red-500 size-5" />
-                  </Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell align="center">
-                    <AwardIcon className="text-yellow-500 size-5" />
-                  </Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell align="center">
-                    <Text size="3" weight="bold" className="text-accent-9">
-                      Total
-                    </Text>
-                  </Table.ColumnHeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {leaderboardData.roundScores.map((round, index) => (
-                  <Table.Row key={index}>
-                    <Table.Cell className="text-center">{round.roundNumber}</Table.Cell>
-                    <Table.Cell className="text-center">{formatNumber(round.influence)}</Table.Cell>
-                    <Table.Cell className="text-center">{formatNumber(round.empathy)}</Table.Cell>
-                    <Table.Cell className="text-center">{formatNumber(round.harmony)}</Table.Cell>
-                    <Table.Cell className="text-center">
-                      {formatNumber(round.totalScore)}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
+            <Accordion type="multiple" className="w-full">
+              {leaderboardData.games.map((game, gameIndex) => (
+                <GameAccordionItem key={gameIndex} game={game} gameIndex={gameIndex} />
+              ))}
+            </Accordion>
           </Flex>
         </Card>
       )}
     </Grid>
+  );
+}
+
+function GameAccordionItem({ game, gameIndex }: { game: GameData; gameIndex: number }) {
+  // Calculate game totals
+  const gameTotals = game.rounds.reduce(
+    (acc, round) => {
+      acc.influence += round.influence;
+      acc.empathy += round.empathy;
+      acc.harmony += round.harmony;
+      acc.totalScore += round.totalScore;
+      return acc;
+    },
+    { influence: 0, empathy: 0, harmony: 0, totalScore: 0 },
+  );
+
+  return (
+    <AccordionItem value={`game-${gameIndex}`}>
+      <AccordionTrigger>
+        <Flex direction="column" width="100%" py="2" gap="2">
+          <Grid columns={{ initial: "1", md: "2" }} gap="2">
+            <Flex justify="between" align="center" width="100%">
+              <Flex gap="2" align="center">
+                <Badge size="1" color="gray" variant="soft">
+                  Joc {gameIndex + 1}
+                </Badge>
+                <Text size="2" weight="medium">
+                  {game.rounds.length} runde
+                </Text>
+              </Flex>
+            </Flex>
+            <Flex justify="between" align="center" width="100%">
+              <Flex gap="4" className="w-fit justify-end">
+                <Flex gap="1" align="center" className="w-1/4 justify-center">
+                  <BrainIcon className="text-blue-500 size-4" />
+                  <Text size="2" className="tabular-nums">
+                    {formatNumber(gameTotals.influence)}
+                  </Text>
+                </Flex>
+                <Flex gap="1" align="center" className="w-1/4 justify-center">
+                  <HeartIcon className="text-red-500 size-4" />
+                  <Text size="2" className="tabular-nums">
+                    {formatNumber(gameTotals.empathy)}
+                  </Text>
+                </Flex>
+                <Flex gap="1" align="center" className="w-1/4 justify-center">
+                  <AwardIcon className="text-yellow-500 size-4" />
+                  <Text size="2" className="tabular-nums">
+                    {formatNumber(gameTotals.harmony)}
+                  </Text>
+                </Flex>
+                <Flex gap="1" align="center" className="w-1/4 justify-center">
+                  <Text size="2" weight="bold" className="tabular-nums">
+                    {formatNumber(gameTotals.totalScore)}
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+          </Grid>
+        </Flex>
+      </AccordionTrigger>
+      <AccordionContent>
+        <Box py="3" px="1">
+          <RoundsTable rounds={game.rounds} />
+        </Box>
+      </AccordionContent>
+    </AccordionItem>
+  );
+}
+
+function RoundsTable({ rounds }: { rounds: LeaderboardRoundScore[] }) {
+  return (
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeaderCell align="center" className="w-1/5">
+            <Text size="2" weight="bold" className="text-accent-9">
+              Rundă
+            </Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell align="center" className="w-1/5">
+            <BrainIcon className="text-blue-500 size-4 mx-auto" />
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell align="center" className="w-1/5">
+            <HeartIcon className="text-red-500 size-4 mx-auto" />
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell align="center" className="w-1/5">
+            <AwardIcon className="text-yellow-500 size-4 mx-auto" />
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell align="center" className="w-1/5">
+            <Text size="2" weight="bold" className="text-accent-9">
+              Total
+            </Text>
+          </Table.ColumnHeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {rounds.map((round, index) => (
+          <Table.Row key={index}>
+            <Table.Cell className="text-center">{round.roundNumber}</Table.Cell>
+            <Table.Cell className="text-center tabular-nums">
+              {formatNumber(round.influence)}
+            </Table.Cell>
+            <Table.Cell className="text-center tabular-nums">
+              {formatNumber(round.empathy)}
+            </Table.Cell>
+            <Table.Cell className="text-center tabular-nums">
+              {formatNumber(round.harmony)}
+            </Table.Cell>
+            <Table.Cell className="text-center tabular-nums">
+              {formatNumber(round.totalScore)}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table.Root>
   );
 }
 

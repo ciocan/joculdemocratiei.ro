@@ -217,7 +217,26 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
         debateTopic: (row.debateTopic as string) || "",
         debateQuestion: (row.debateQuestion as string) || "",
         answer: row.answer as string | null,
+        roomId: row.roomId as string,
       }));
+
+      // Group rounds by roomId to create games
+      const gameMap = new Map<string, { roomId: string; rounds: typeof roundScores }>();
+
+      for (const round of roundScores) {
+        if (!gameMap.has(round.roomId)) {
+          gameMap.set(round.roomId, { roomId: round.roomId, rounds: [] });
+        }
+        gameMap.get(round.roomId)?.rounds.push(round);
+      }
+
+      // Sort rounds within each game by roundNumber
+      for (const game of gameMap.values()) {
+        game.rounds.sort((a, b) => a.roundNumber - b.roundNumber);
+      }
+
+      // Convert map to array and sort games by the first round's creation time (newest first)
+      const games = Array.from(gameMap.values());
 
       let finalScores = null;
       if (finalScoresResult.data.length > 0) {
@@ -233,7 +252,8 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
       }
 
       return {
-        roundScores,
+        games,
+        roundScores, // Keep for backward compatibility
         finalScores,
       };
     } catch (error) {

@@ -13,20 +13,30 @@ export type UserProfile = UserData & {
   secretKey: string;
 };
 
+export type LeaderboardRoundScore = {
+  influence: number;
+  empathy: number;
+  harmony: number;
+  totalScore: number;
+  agreeVotes: number;
+  neutralVotes: number;
+  disagreeVotes: number;
+  roundNumber: number;
+  debateTopic: string;
+  debateQuestion: string;
+  answer: string | null;
+  roomId: string;
+};
+
+export type GameData = {
+  roomId: string;
+  rounds: LeaderboardRoundScore[];
+  createdAt?: number;
+};
+
 export type LeaderboardData = {
-  roundScores: {
-    influence: number;
-    empathy: number;
-    harmony: number;
-    totalScore: number;
-    agreeVotes: number;
-    neutralVotes: number;
-    disagreeVotes: number;
-    roundNumber: number;
-    debateTopic: string;
-    debateQuestion: string;
-    answer: string | null;
-  }[];
+  games: GameData[];
+  roundScores: LeaderboardRoundScore[]; // Keep for backward compatibility
   finalScores: {
     influence: number;
     empathy: number;
