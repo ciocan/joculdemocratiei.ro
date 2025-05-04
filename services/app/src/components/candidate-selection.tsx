@@ -12,7 +12,8 @@ import {
 import { CircleBackslashIcon } from "@radix-ui/react-icons";
 import { AnimatePresence } from "motion/react";
 
-import { candidates } from "@joculdemocratiei/utils";
+import { candidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
+import { useThemeStore } from "@/stores/theme-store";
 
 interface CandidateSelectionProps {
   selectedCandidate?: string;
@@ -31,6 +32,7 @@ export function CandidateSelection({
   onSelectCandidate,
 }: CandidateSelectionProps) {
   const scrollAreaHeight = selectedCandidate ? "calc(100dvh - 320px)" : "calc(100dvh - 170px)";
+  const { theme } = useThemeStore();
 
   return (
     <>
@@ -79,7 +81,7 @@ export function CandidateSelection({
                       <Grid columns="auto 1fr" gap="4" align="center" className="flex-1">
                         <Avatar
                           size={{ initial: "6", xs: "9" }}
-                          src={candidate.image}
+                          src={getCandidateAvatarUrl(candidate.id, theme)}
                           radius="full"
                           fallback={candidate.name.substring(0, 2)}
                         />
