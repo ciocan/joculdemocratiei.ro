@@ -287,6 +287,25 @@ export class DebateRoom extends DurableObject<Env> {
         currentRoundData.playerAnswers[playerId] = parsedMessage.answerId;
         await this.saveState();
 
+        // Check if all players have submitted their answers
+        if (this.haveAllPlayersDebated()) {
+          // Set countdown to 5 seconds if more than 5 seconds remain
+          const now = Date.now();
+          const timeRemaining = this.countdownEndTime ? this.countdownEndTime - now : 0;
+          if (timeRemaining > 5000) {
+            logger.debug(
+              `[DebateRoom:debate_answer] All players have debated, advancing timer to 5 seconds. Previous time remaining: ${Math.floor(timeRemaining / 1000)}s`,
+            );
+            this.countdownEndTime = now + 5000;
+            await this.saveState();
+
+            // Update the alarm
+            if (this.countdownEndTime) {
+              this.ctx.storage.setAlarm(this.countdownEndTime);
+            }
+          }
+        }
+
         this.broadcast();
         break;
       }
@@ -302,6 +321,25 @@ export class DebateRoom extends DurableObject<Env> {
 
         currentRoundData.playerVotes[playerId][targetPlayerId] = vote;
         await this.saveState();
+
+        // Check if all players have completed their voting
+        if (this.haveAllPlayersVoted()) {
+          // Set countdown to 5 seconds if more than 5 seconds remain
+          const now = Date.now();
+          const timeRemaining = this.countdownEndTime ? this.countdownEndTime - now : 0;
+          if (timeRemaining > 5000) {
+            logger.debug(
+              `[DebateRoom:vote] All players have voted, advancing timer to 5 seconds. Previous time remaining: ${Math.floor(timeRemaining / 1000)}s`,
+            );
+            this.countdownEndTime = now + 5000;
+            await this.saveState();
+
+            // Update the alarm
+            if (this.countdownEndTime) {
+              this.ctx.storage.setAlarm(this.countdownEndTime);
+            }
+          }
+        }
 
         this.broadcast();
         break;
@@ -497,6 +535,24 @@ export class DebateRoom extends DurableObject<Env> {
             `[DebateRoom:handleBotDebateActions] Bot ${botPlayer.name} selected answer ${answerId} after ${botDelay}ms delay`,
           );
 
+          // Check if all players have now submitted their answers
+          if (this.haveAllPlayersDebated()) {
+            // Set countdown to 5 seconds if more than 5 seconds remain
+            const now = Date.now();
+            const timeRemaining = this.countdownEndTime ? this.countdownEndTime - now : 0;
+            if (timeRemaining > 5000) {
+              logger.debug(
+                `[DebateRoom:handleBotDebateActions] All players have debated, advancing timer to 5 seconds. Previous time remaining: ${Math.floor(timeRemaining / 1000)}s`,
+              );
+              this.countdownEndTime = now + 5000;
+
+              // Update the alarm
+              if (this.countdownEndTime) {
+                this.ctx.storage.setAlarm(this.countdownEndTime);
+              }
+            }
+          }
+
           // Save and broadcast after each individual bot action
           await this.saveState();
           this.broadcast();
@@ -581,6 +637,24 @@ export class DebateRoom extends DurableObject<Env> {
         logger.debug(
           `[DebateRoom:handleBotVotingActions] Bot ${botPlayer.name} voted ${vote} for ${targetPlayer.name} after ${botDelay}ms delay`,
         );
+
+        // Check if all players have now completed their voting
+        if (this.haveAllPlayersVoted()) {
+          // Set countdown to 5 seconds if more than 5 seconds remain
+          const now = Date.now();
+          const timeRemaining = this.countdownEndTime ? this.countdownEndTime - now : 0;
+          if (timeRemaining > 5000) {
+            logger.debug(
+              `[DebateRoom:handleBotVotingActions] All players have voted, advancing timer to 5 seconds. Previous time remaining: ${Math.floor(timeRemaining / 1000)}s`,
+            );
+            this.countdownEndTime = now + 5000;
+
+            // Update the alarm
+            if (this.countdownEndTime) {
+              this.ctx.storage.setAlarm(this.countdownEndTime);
+            }
+          }
+        }
 
         // Save and broadcast after each individual bot vote
         await this.saveState();
@@ -694,6 +768,74 @@ export class DebateRoom extends DurableObject<Env> {
     this.phase = newPhase;
     await this.saveState();
     this.broadcast();
+  }
+
+  /**
+   * Checks if all players have submitted their debate answers
+   */
+  private haveAllPlayersDebated(): boolean {
+    const currentRoundData = this.roundsData[this.currentRound];
+    if (!currentRoundData) {
+      return false;
+    }
+
+    // Check if all players have submitted an answer
+    for (const player of this.players) {
+      // Skip players without a candidate ID (they can't debate)
+      if (!player.candidateId) {
+        continue;
+      }
+
+      // If any player hasn't submitted an answer, return false
+      if (!currentRoundData.playerAnswers[player.playerId]) {
+        return false;
+      }
+    }
+
+    // All players have submitted answers
+    return true;
+  }
+
+  /**
+   * Checks if all players have voted for all other players who submitted answers
+   */
+  private haveAllPlayersVoted(): boolean {
+    const currentRoundData = this.roundsData[this.currentRound];
+    if (!currentRoundData) {
+      return false;
+    }
+
+    // Get players who submitted answers (only they can be voted on)
+    const playersWithAnswers = this.players.filter(
+      (player) => currentRoundData.playerAnswers[player.playerId],
+    );
+
+    // Check if each player has voted for all other players with answers
+    for (const voter of this.players) {
+      // Skip checking players without answers (they can't vote)
+      if (!currentRoundData.playerAnswers[voter.playerId]) {
+        continue;
+      }
+
+      // Get this player's votes
+      const playerVotes = currentRoundData.playerVotes[voter.playerId] || {};
+
+      // Check if this player has voted for all other players with answers
+      for (const target of playersWithAnswers) {
+        // Skip self
+        if (target.playerId === voter.playerId) {
+          continue;
+        }
+
+        // If this player hasn't voted for a target player, return false
+        if (!playerVotes[target.playerId]) {
+          return false;
+        }
+      }
+    }
+
+    // All players have voted for all other players with answers
+    return true;
   }
 
   private async archiveRoundData() {
