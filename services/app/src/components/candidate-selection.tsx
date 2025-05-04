@@ -62,7 +62,7 @@ export function CandidateSelection({
                 return (
                   <>
                     {isFirstUnavailable && (
-                      <Callout.Root key="unavailable-callout">
+                      <Callout.Root key={`unavailable-callout-${candidate.id}`}>
                         <Grid gap="4" align="center" columns="auto 1fr auto" justify="between">
                           <CircleBackslashIcon className="size-6" />
                           <Callout.Text className="text-center" size={{ initial: "1", xs: "3" }}>

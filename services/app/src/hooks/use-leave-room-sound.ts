@@ -1,7 +1,7 @@
 import { useSoundEffects } from "./use-sound-effects";
 
 /**
- * Hook to play a sound when a player leaves the room
+ * Hook to play a sound when a player leaves the room and ensure proper room leaving
  * @param handleLeaveRoom - The function to handle leaving the room
  */
 export function useLeaveRoomSound(handleLeaveRoom?: () => void) {

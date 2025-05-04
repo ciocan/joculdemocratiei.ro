@@ -30,14 +30,24 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
   const candidateImage = candidateId ? getCandidateAvatarUrl(candidateId, theme) : undefined;
 
   const navigateToHome = () => {
-    handleLeaveRoomWithSound();
-    navigate({ to: "/" });
+    // If we're in a room, play the leave sound
+    if (handleLeaveRoom) {
+      handleLeaveRoomWithSound();
+    } else {
+      // Otherwise just navigate
+      navigate({ to: "/" });
+    }
   };
 
   const navigateToProfile = () => {
     if (user?.userId) {
-      handleLeaveRoomWithSound();
-      navigate({ to: "/u/$userId", params: { userId: user.userId } });
+      // If we're in a room, play the leave sound
+      if (handleLeaveRoom) {
+        handleLeaveRoomWithSound();
+      } else {
+        // Otherwise just navigate
+        navigate({ to: "/u/$userId", params: { userId: user.userId } });
+      }
     }
   };
 

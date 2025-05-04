@@ -1,6 +1,7 @@
 import { Heading, Card, Grid, Avatar, Badge, Button, Flex } from "@radix-ui/themes";
 
-import { candidates } from "@joculdemocratiei/utils";
+import { candidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
+import { useThemeStore } from "@/stores/theme-store";
 
 interface SelectedCandidateSummaryProps {
   candidateId: string;
@@ -12,6 +13,7 @@ export function SelectedCandidateSummary({
   onContinue,
 }: SelectedCandidateSummaryProps) {
   const selectedCandidateData = candidates.find((c) => c.id === candidateId);
+  const { theme } = useThemeStore();
 
   if (!selectedCandidateData) {
     return null;
@@ -24,7 +26,8 @@ export function SelectedCandidateSummary({
           <Grid justify="end" align="center">
             <Avatar
               size="4"
-              src={selectedCandidateData.image}
+              // src={selectedCandidateData.image}
+              src={getCandidateAvatarUrl(selectedCandidateData.id, theme)}
               fallback={selectedCandidateData.name.substring(0, 2)}
               radius="full"
             />

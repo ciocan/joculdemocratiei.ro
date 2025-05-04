@@ -5,7 +5,7 @@ import type { GamePlayer } from "@joculdemocratiei/utils";
 
 import { UserMenu } from "@/components/user-menu";
 import { ShareButtons } from "@/components/share";
-import { useLeaveRoomSound } from "@/hooks/use-leave-room-sound";
+import { useRoomLeave } from "@/hooks/use-room-leave";
 
 interface RoomHeaderProps {
   players: GamePlayer[];
@@ -32,7 +32,7 @@ export function RoomHeader({
   showShareButtons = true,
   handleLeaveRoom,
 }: RoomHeaderProps) {
-  const { handleLeaveRoomWithSound } = useLeaveRoomSound(handleLeaveRoom);
+  const { handleLeaveRoomWithCleanup } = useRoomLeave(handleLeaveRoom);
   return (
     <Grid columns="2" align="center" className="border-b border-accent-7 p-4">
       <Flex gap="2" align="center">
@@ -73,7 +73,7 @@ export function RoomHeader({
 
       <Flex gap="2" justify="end">
         {showShareButtons && <ShareButtons />}
-        <UserMenu handleLeaveRoom={handleLeaveRoomWithSound} />
+        <UserMenu handleLeaveRoom={handleLeaveRoomWithCleanup} />
       </Flex>
     </Grid>
   );
