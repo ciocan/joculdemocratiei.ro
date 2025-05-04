@@ -13,19 +13,42 @@ export function useSoundEffects() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      playerJoinSound.current = new Audio("/sounds/player-join.mp3");
-      playerLeaveSound.current = new Audio("/sounds/player-leave.mp3");
-      playerLeaveRoomSound.current = new Audio("/sounds/player-leave-room.mp3");
-      nextPhaseSound.current = new Audio("/sounds/next-phase.mp3");
-      finalResultsSound.current = new Audio("/sounds/final-results.mp3");
-      playerVotedSound.current = new Audio("/sounds/player-voted.mp3");
+      try {
+        playerJoinSound.current = new Audio("/sounds/player-join.mp3");
+        playerLeaveSound.current = new Audio("/sounds/player-leave.mp3");
+        playerLeaveRoomSound.current = new Audio("/sounds/player-leave-room.mp3");
+        nextPhaseSound.current = new Audio("/sounds/next-phase.mp3");
+        finalResultsSound.current = new Audio("/sounds/final-results.mp3");
+        playerVotedSound.current = new Audio("/sounds/player-voted.mp3");
 
-      playerJoinSound.current.load();
-      playerLeaveSound.current.load();
-      playerLeaveRoomSound.current.load();
-      nextPhaseSound.current.load();
-      finalResultsSound.current.load();
-      playerVotedSound.current.load();
+        playerJoinSound.current.addEventListener("error", (e) =>
+          console.error("Error loading player join sound:", e),
+        );
+        playerLeaveSound.current.addEventListener("error", (e) =>
+          console.error("Error loading player leave sound:", e),
+        );
+        playerLeaveRoomSound.current.addEventListener("error", (e) =>
+          console.error("Error loading player leave room sound:", e),
+        );
+        nextPhaseSound.current.addEventListener("error", (e) =>
+          console.error("Error loading next phase sound:", e),
+        );
+        finalResultsSound.current.addEventListener("error", (e) =>
+          console.error("Error loading final results sound:", e),
+        );
+        playerVotedSound.current.addEventListener("error", (e) =>
+          console.error("Error loading player voted sound:", e),
+        );
+
+        playerJoinSound.current.load();
+        playerLeaveSound.current.load();
+        playerLeaveRoomSound.current.load();
+        nextPhaseSound.current.load();
+        finalResultsSound.current.load();
+        playerVotedSound.current.load();
+      } catch (error) {
+        console.error("Error initializing sound effects:", error);
+      }
     }
 
     return () => {

@@ -26,6 +26,7 @@ import {
   RefreshCwIcon,
   MessageCircleIcon,
   MessageCircleQuestionIcon,
+  ExternalLinkIcon,
 } from "lucide-react";
 
 import { candidates, getCandidateAvatarUrl, isBot } from "@joculdemocratiei/utils";
@@ -398,7 +399,7 @@ function AllRoundsAnswers() {
                                   <Flex direction="column" gap="1">
                                     <Text
                                       size="2"
-                                      className="break-words max-w-[200px] md:max-w-none text-accent-9"
+                                      className="break-words max-w-[200px] md:max-w-none"
                                     >
                                       {answerText || "Niciun răspuns"}
                                     </Text>
@@ -415,9 +416,10 @@ function AllRoundsAnswers() {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           color="blue"
-                                          className="hover:underline"
+                                          className="hover:underline flex! items-center! gap-1!"
                                         >
-                                          Sursa
+                                          Vezi sursa răspunsului
+                                          <ExternalLinkIcon size={14} />
                                         </Link>
                                       )}
                                   </Flex>
@@ -499,7 +501,7 @@ function AllRoundsAnswers() {
 
                                 <Box className="border-t border-gray-4 pt-2">
                                   <Flex direction="column" gap="1">
-                                    <Text size="2" className="break-words text-accent-9">
+                                    <Text size="2" className="break-words">
                                       {answerText || "Niciun răspuns"}
                                     </Text>
                                     {answerId &&
@@ -514,10 +516,11 @@ function AllRoundsAnswers() {
                                           }
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="hover:underline"
+                                          className="hover:underline flex! items-center! gap-1!"
                                           color="blue"
                                         >
-                                          Sursa
+                                          Vezi sursa răspunsului
+                                          <ExternalLinkIcon size={14} />
                                         </Link>
                                       )}
                                   </Flex>

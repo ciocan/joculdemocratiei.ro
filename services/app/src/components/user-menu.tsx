@@ -22,7 +22,28 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
   const gameState = gameStore.get();
   const candidateId = gameState.context.candidateId;
   const { theme, toggleTheme } = useThemeStore();
-  const { isMuted, volume, setVolume, setMuted } = useSoundSettings();
+
+  let soundSettings: {
+    isMuted: boolean;
+    volume: number;
+    setVolume: (volume: number) => void;
+    setMuted: (muted: boolean) => void;
+    toggleMute?: () => void;
+  };
+
+  try {
+    soundSettings = useSoundSettings();
+  } catch (error) {
+    console.error("Error loading sound settings:", error);
+    soundSettings = {
+      isMuted: false,
+      volume: 0.7,
+      setVolume: () => {},
+      setMuted: () => {},
+    };
+  }
+
+  const { isMuted, volume, setVolume, setMuted } = soundSettings;
   const { handleLeaveRoomWithSound } = useLeaveRoomSound(handleLeaveRoom);
 
   const userInitials = user ? `${user.firstName[0]}${user.lastName[0]}` : "?";
@@ -30,22 +51,18 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
   const candidateImage = candidateId ? getCandidateAvatarUrl(candidateId, theme) : undefined;
 
   const navigateToHome = () => {
-    // If we're in a room, play the leave sound
     if (handleLeaveRoom) {
       handleLeaveRoomWithSound();
     } else {
-      // Otherwise just navigate
       navigate({ to: "/" });
     }
   };
 
   const navigateToProfile = () => {
     if (user?.userId) {
-      // If we're in a room, play the leave sound
       if (handleLeaveRoom) {
         handleLeaveRoomWithSound();
       } else {
-        // Otherwise just navigate
         navigate({ to: "/u/$userId", params: { userId: user.userId } });
       }
     }
@@ -76,6 +93,7 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
           <HomeIcon />
           <span className="ml-2">Pagina principală</span>
         </DropdownMenu.Item>
+        <DropdownMenu.Separator />
         <DropdownMenu.Item onClick={toggleTheme}>
           {theme === "amber" ? (
             <PaletteIcon className="text-blue-9 size-4" />
@@ -100,7 +118,12 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
             <Flex direction="column" gap="2" p="2">
               <Flex align="center" justify="between" gap="2">
                 <span>Sunet:</span>
-                <Switch checked={!isMuted} onCheckedChange={(checked) => setMuted(!checked)} />
+                <Switch
+                  checked={!isMuted}
+                  onCheckedChange={(checked) => {
+                    setMuted(!checked);
+                  }}
+                />
               </Flex>
               <Flex direction="column" gap="1">
                 <span>Volum:</span>
@@ -110,19 +133,23 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
                   min={0}
                   max={1}
                   step={0.1}
-                  onValueChange={(newValue) => setVolume(newValue[0])}
+                  onValueChange={(newValue) => {
+                    setVolume(newValue[0]);
+                  }}
                   disabled={isMuted}
                 />
               </Flex>
             </Flex>
           </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
-        <DropdownMenu.Separator />
         {handleLeaveRoom && (
-          <DropdownMenu.Item color="red" onClick={handleLeaveRoomWithSound}>
-            <ExitIcon />
-            <span className="ml-2">Părăsește camera</span>
-          </DropdownMenu.Item>
+          <>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item color="red" onClick={handleLeaveRoomWithSound}>
+              <ExitIcon />
+              <span className="ml-2">Părăsește camera</span>
+            </DropdownMenu.Item>
+          </>
         )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
