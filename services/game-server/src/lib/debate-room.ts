@@ -461,33 +461,48 @@ export class DebateRoom extends DurableObject<Env> {
       return;
     }
 
-    for (const player of this.players) {
-      // Skip if not a bot or already answered
-      if (!isBot(player.playerId) || currentRoundData.playerAnswers[player.playerId]) {
-        continue;
-      }
+    // Get all bots that haven't answered yet
+    const botsToAct = this.players.filter(
+      (p) => isBot(p.playerId) && !currentRoundData.playerAnswers[p.playerId],
+    );
 
+    // If no bots need to act, return early
+    if (botsToAct.length === 0) {
+      return;
+    }
+
+    // Create staggered timeouts for each bot
+    for (const botPlayer of botsToAct) {
       // Get available answers for this bot
-      const botAnswers = currentRoundData.debateAnswers[player.playerId] || [];
+      const botAnswers = currentRoundData.debateAnswers[botPlayer.playerId] || [];
       if (botAnswers.length === 0) {
         continue;
       }
 
-      // Select an answer based on bot's risk tolerance
-      const botPlayer = player as BotPlayer;
-      const answerId = selectBotDebateAnswer(botPlayer, botAnswers);
+      // Generate a random delay for this specific bot
+      const botDelay =
+        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
+        GLOBAL_BOT_CONFIG.actionDelayRange[0];
 
-      // Record the bot's answer
-      if (answerId) {
-        currentRoundData.playerAnswers[player.playerId] = answerId;
-        logger.debug(
-          `[DebateRoom:handleBotDebateActions] Bot ${player.name} selected answer ${answerId}`,
-        );
-      }
+      // Create a timeout for this bot's action
+      setTimeout(async () => {
+        // Select an answer based on bot's risk tolerance
+        const typedBotPlayer = botPlayer as BotPlayer;
+        const answerId = selectBotDebateAnswer(typedBotPlayer, botAnswers);
+
+        // Record the bot's answer
+        if (answerId) {
+          currentRoundData.playerAnswers[botPlayer.playerId] = answerId;
+          logger.debug(
+            `[DebateRoom:handleBotDebateActions] Bot ${botPlayer.name} selected answer ${answerId} after ${botDelay}ms delay`,
+          );
+
+          // Save and broadcast after each individual bot action
+          await this.saveState();
+          this.broadcast();
+        }
+      }, botDelay);
     }
-
-    await this.saveState();
-    this.broadcast();
   }
 
   /**
@@ -499,52 +514,87 @@ export class DebateRoom extends DurableObject<Env> {
       return;
     }
 
-    for (const player of this.players) {
-      // Skip if not a bot
-      if (!isBot(player.playerId)) {
-        continue;
-      }
+    // Get all bots that need to vote
+    const botPlayers = this.players.filter((player) => isBot(player.playerId));
 
-      const botPlayer = player as BotPlayer;
+    // If no bots need to vote, return early
+    if (botPlayers.length === 0) {
+      return;
+    }
 
-      // For each player that has submitted an answer, the bot will vote
-      for (const targetPlayer of this.players) {
-        // Skip voting for self or if already voted for this player
-        if (
-          targetPlayer.playerId === player.playerId ||
-          (currentRoundData.playerVotes[player.playerId] &&
-            currentRoundData.playerVotes[player.playerId][targetPlayer.playerId])
-        ) {
-          continue;
+    // For each bot, create a staggered timeout for its voting actions
+    for (const botPlayer of botPlayers) {
+      // Generate a random delay for this specific bot
+      const botDelay =
+        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
+        GLOBAL_BOT_CONFIG.actionDelayRange[0];
+
+      // Create a timeout for this bot's voting actions
+      setTimeout(async () => {
+        // Find players this bot hasn't voted for yet
+        const playersToVoteFor = this.players.filter((targetPlayer) => {
+          // Skip voting for self
+          if (targetPlayer.playerId === botPlayer.playerId) {
+            return false;
+          }
+
+          // Skip if already voted for this player
+          if (
+            currentRoundData.playerVotes[botPlayer.playerId] &&
+            currentRoundData.playerVotes[botPlayer.playerId][targetPlayer.playerId]
+          ) {
+            return false;
+          }
+
+          // Skip if target player didn't submit an answer
+          if (!currentRoundData.playerAnswers[targetPlayer.playerId]) {
+            return false;
+          }
+
+          return true;
+        });
+
+        // If no one to vote for, skip this bot
+        if (playersToVoteFor.length === 0) {
+          return;
         }
 
-        // Skip if target player didn't submit an answer
-        if (!currentRoundData.playerAnswers[targetPlayer.playerId]) {
-          continue;
-        }
+        // Choose one random player to vote for in this action
+        // This makes voting appear more natural (one at a time)
+        const targetPlayer = playersToVoteFor[Math.floor(Math.random() * playersToVoteFor.length)];
 
         // Determine vote based on bot's personality and target's candidate
+        const typedBotPlayer = botPlayer as BotPlayer;
         const vote = determineBotVote(
-          botPlayer,
+          typedBotPlayer,
           targetPlayer.playerId,
           targetPlayer.candidateId,
           this.players,
         );
 
         // Record the bot's vote
-        if (!currentRoundData.playerVotes[player.playerId]) {
-          currentRoundData.playerVotes[player.playerId] = {};
+        if (!currentRoundData.playerVotes[botPlayer.playerId]) {
+          currentRoundData.playerVotes[botPlayer.playerId] = {};
         }
 
-        currentRoundData.playerVotes[player.playerId][targetPlayer.playerId] = vote;
+        currentRoundData.playerVotes[botPlayer.playerId][targetPlayer.playerId] = vote;
         logger.debug(
-          `[DebateRoom:handleBotVotingActions] Bot ${player.name} voted ${vote} for ${targetPlayer.name}`,
+          `[DebateRoom:handleBotVotingActions] Bot ${botPlayer.name} voted ${vote} for ${targetPlayer.name} after ${botDelay}ms delay`,
         );
-      }
-    }
 
-    await this.saveState();
-    this.broadcast();
+        // Save and broadcast after each individual bot vote
+        await this.saveState();
+        this.broadcast();
+
+        // If there are more players to vote for, schedule another voting action
+        // This ensures bots continue voting for other players with additional delays
+        if (playersToVoteFor.length > 1) {
+          // Schedule the next voting action with a shorter delay
+          const nextDelay = Math.floor(Math.random() * 1000) + 500; // 500-1500ms
+          setTimeout(() => this.handleBotVotingActions(), nextDelay);
+        }
+      }, botDelay);
+    }
   }
 
   async removePlayer(playerId: string) {
@@ -584,13 +634,7 @@ export class DebateRoom extends DurableObject<Env> {
         await this.env.GAME_BACKEND.updateGameStarted(this.roomId, true);
       }
 
-      setTimeout(
-        async () => {
-          await this.handleBotDebateActions();
-        },
-        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
-          GLOBAL_BOT_CONFIG.actionDelayRange[0],
-      );
+      await this.handleBotDebateActions();
     }
 
     if (newPhase === "voting") {
@@ -600,13 +644,7 @@ export class DebateRoom extends DurableObject<Env> {
         this.ctx.storage.setAlarm(this.countdownEndTime);
       }
 
-      setTimeout(
-        async () => {
-          await this.handleBotVotingActions();
-        },
-        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
-          GLOBAL_BOT_CONFIG.actionDelayRange[0],
-      );
+      await this.handleBotVotingActions();
     }
 
     if (newPhase === "results") {
