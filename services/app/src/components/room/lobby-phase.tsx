@@ -15,6 +15,8 @@ import { InfoCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
 
 import { useRoomLobby, useRoomPlayers } from "@/contexts/room-context";
+import { usePlayerSounds } from "@/hooks/use-player-sounds";
+import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
 
 function InstructionsDialog() {
   return (
@@ -70,6 +72,9 @@ function InstructionsDialog() {
 export function LobbyPhase() {
   const { players, currentUserId } = useRoomPlayers();
   const { isPrivate, countdown, isCurrentUserReady, handleReady } = useRoomLobby();
+  usePlayerSounds(players, currentUserId);
+  usePlayerLeaveSounds(players, currentUserId);
+
   return (
     <>
       <Card className="m-4 p-4">

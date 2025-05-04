@@ -6,6 +6,7 @@ import { ProtectedRoute } from "@/components/protected-route";
 import { Loading } from "@/components/loading";
 import { RoomProviderWithParams, useRoomState, useRoomActions } from "@/contexts/room-context";
 import { LobbyPhase, DebatePhase, VotingPhase, ResultsPhase, RoomHeader } from "@/components/room";
+import { usePhaseSounds } from "@/hooks/use-phase-sounds";
 
 export const Route = createFileRoute("/j/$roomId")({
   component: RouteComponent,
@@ -42,6 +43,8 @@ function RoomHeaderWithContext() {
 function RoomContent() {
   const { state, isLoading, wsUrl } = useRoomState();
   const { handleNewGame } = useRoomActions();
+  // Use the phase sounds hook to play sounds on phase transitions
+  usePhaseSounds(state.context.phase);
 
   const renderPhaseComponent = () => {
     switch (state.context.phase) {

@@ -9,6 +9,7 @@ import { NotFound } from "@/components/NotFound";
 import { seo } from "@/utils/seo";
 import { GameProvider } from "@/contexts/game-context";
 import { useThemeStore } from "@/stores/theme-store";
+import { SoundProvider } from "@/contexts/sound-context";
 
 import appCss from "@/styles/app.css?url";
 import { AnonProvider } from "@/contexts/anon-provider";
@@ -82,22 +83,24 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <QueryClientProvider client={queryClient}>
           <AnonProvider>
-            <GameProvider>
-              <Theme appearance="dark" accentColor={theme} grayColor="olive" radius="full">
-                <Grid
-                  align="center"
-                  justify="center"
-                  maxWidth="600px"
-                  minHeight="100dvh"
-                  className="text-center mx-auto"
-                >
-                  {children}
-                </Grid>
-                <Toaster position="top-center" richColors theme="dark" />
-                <ThemePanel defaultOpen={false} />
-              </Theme>
-              <TanStackRouterDevtools position="bottom-right" />
-            </GameProvider>
+            <SoundProvider>
+              <GameProvider>
+                <Theme appearance="dark" accentColor={theme} grayColor="olive" radius="full">
+                  <Grid
+                    align="center"
+                    justify="center"
+                    maxWidth="600px"
+                    minHeight="100dvh"
+                    className="text-center mx-auto"
+                  >
+                    {children}
+                  </Grid>
+                  <Toaster position="top-center" richColors theme="dark" />
+                  <ThemePanel defaultOpen={false} />
+                </Theme>
+                <TanStackRouterDevtools position="bottom-right" />
+              </GameProvider>
+            </SoundProvider>
           </AnonProvider>
           <Scripts />
         </QueryClientProvider>

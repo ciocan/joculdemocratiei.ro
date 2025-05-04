@@ -32,8 +32,10 @@ import { candidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
 import { useThemeStore } from "@/stores/theme-store";
 import { useRoomResults } from "@/contexts/room-context";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { useState, useEffect } from "react";
+import { useSoundEffects } from "@/hooks/use-sound-effects";
+import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
 import { cn } from "@/utils/lib";
-import { useState } from "react";
 
 export function ResultsPhase() {
   const {
@@ -44,17 +46,33 @@ export function ResultsPhase() {
     handleNextRound,
     currentRound,
     totalRounds,
+    isFinalRound,
     roundsData,
     cumulativeScores,
     countdown,
   } = useRoomResults();
 
   const theme = useThemeStore((state) => state.theme);
+  const { playFinalResultsSound } = useSoundEffects();
 
-  const isFinalResults = currentRound === totalRounds - 1;
   const [activeTab, setActiveTab] = useState<string>(
-    isFinalResults && currentRound > 0 ? "total" : currentRound.toString(),
+    isFinalRound && currentRound > 0 ? "total" : currentRound.toString(),
   );
+
+  useEffect(() => {
+    const hasPlayed = { current: false };
+
+    if (isFinalRound && !hasPlayed.current) {
+      const timer = setTimeout(() => {
+        playFinalResultsSound();
+        hasPlayed.current = true;
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isFinalRound, playFinalResultsSound]);
+
+  usePlayerLeaveSounds(players, currentUserId);
 
   const sortedPlayers = [...players].sort((a, b) => {
     const scores =
@@ -77,7 +95,7 @@ export function ResultsPhase() {
       <Flex direction="column" align="center" justify="center" gap="1">
         <Heading size="3" className="flex items-center gap-2">
           <TrophyIcon className="text-yellow-500" size={20} />
-          {isFinalResults ? "Rezultate finale" : `Rezultate runda ${currentRound + 1}`}
+          {isFinalRound ? "Rezultate finale" : `Rezultate runda ${currentRound + 1}`}
         </Heading>
         <Text size="1" color="gray" align="center" className="flex items-center gap-2">
           Vezi cum te-ai descurcat în dezbatere. <InfoDialog />
@@ -87,7 +105,7 @@ export function ResultsPhase() {
       {currentRound >= 0 && (
         <Flex justify="center" align="center" gap="2">
           <Tabs.Root
-            defaultValue={isFinalResults && currentRound > 0 ? "total" : currentRound.toString()}
+            defaultValue={isFinalRound && currentRound > 0 ? "total" : currentRound.toString()}
             onValueChange={(value) => setActiveTab(value)}
           >
             <Tabs.List>
@@ -211,7 +229,7 @@ export function ResultsPhase() {
           })}
         </Flex>
 
-        {isFinalResults && <AllRoundsAnswers />}
+        {isFinalRound && <AllRoundsAnswers />}
       </ScrollArea>
       <Grid justify="center" m="4" gap="2" position="sticky">
         {currentRound < totalRounds - 1 && (

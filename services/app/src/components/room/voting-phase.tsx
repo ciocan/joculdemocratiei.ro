@@ -20,11 +20,16 @@ import { candidates, VOTE_COUNTDOWN_TIME } from "@joculdemocratiei/utils";
 
 import { useRoomState, useRoomVoting } from "@/contexts/room-context";
 import { useRoomCountdown } from "@/hooks/use-room-countdown";
+import { useVoteSounds } from "@/hooks/use-vote-sounds";
+import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
 import { cn } from "@/utils/lib";
 
 export function VotingPhase() {
   const { players, currentUserId, candidateId, state } = useRoomState();
   const { answerTexts, debateTopic, playerAnswers, playerVotes, handleVote } = useRoomVoting();
+
+  useVoteSounds(playerVotes || {}, currentUserId);
+  usePlayerLeaveSounds(players, currentUserId);
 
   const countdownEndTime = state.context.countdownEndTime;
   const { countdown, progressPercentage } = useRoomCountdown({

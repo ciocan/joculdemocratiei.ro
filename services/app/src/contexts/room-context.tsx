@@ -6,8 +6,6 @@ import { useRoom } from "@/hooks/use-room";
 import type { RoomMachineEvent } from "@/machines/room-machine";
 import type { GamePlayer, RoundData } from "@joculdemocratiei/utils";
 
-// Define the shape of the contexts
-// 1. Room State Context - For the core state data
 interface RoomStateContextType {
   // TODO: fix this later
   state: AnyMachineSnapshot;
@@ -21,7 +19,6 @@ interface RoomStateContextType {
   candidateId?: string;
 }
 
-// 2. Room Actions Context - For all the action handlers
 interface RoomActionsContextType {
   handleReady: () => void;
   handleLeaveRoom: () => void;
@@ -40,22 +37,18 @@ interface RoomGameDataContextType {
   roundsData: RoundData[];
 }
 
-// Create the contexts with default undefined values
 const RoomStateContext = createContext<RoomStateContextType | undefined>(undefined);
 const RoomActionsContext = createContext<RoomActionsContextType | undefined>(undefined);
 const RoomGameDataContext = createContext<RoomGameDataContextType | undefined>(undefined);
 
-// Provider component
 interface RoomProviderProps {
   children: ReactNode;
   roomId: string;
 }
 
 export function RoomProvider({ children, roomId }: RoomProviderProps) {
-  // Use the existing hook to get all the room functionality
   const roomData = useRoom(roomId);
 
-  // Memoize the state context value to prevent unnecessary re-renders
   const stateContextValue = useMemo(
     () => ({
       state: roomData.state,
@@ -78,7 +71,6 @@ export function RoomProvider({ children, roomId }: RoomProviderProps) {
     ],
   );
 
-  // Memoize the actions context value
   const actionsContextValue = useMemo(
     () => ({
       handleReady: roomData.handleReady,
@@ -98,7 +90,6 @@ export function RoomProvider({ children, roomId }: RoomProviderProps) {
     ],
   );
 
-  // Memoize the game data context value
   const gameDataContextValue = useMemo(
     () => ({
       countdown: roomData.countdown,
@@ -116,7 +107,6 @@ export function RoomProvider({ children, roomId }: RoomProviderProps) {
     ],
   );
 
-  // Provide all the room data through nested contexts
   return (
     <RoomStateContext.Provider value={stateContextValue}>
       <RoomActionsContext.Provider value={actionsContextValue}>
@@ -128,7 +118,6 @@ export function RoomProvider({ children, roomId }: RoomProviderProps) {
   );
 }
 
-// Custom hooks for consuming the contexts
 export function useRoomState() {
   const context = useContext(RoomStateContext);
   if (context === undefined) {
@@ -165,7 +154,6 @@ export function useRoomGameData() {
   };
 }
 
-// Specialized hooks for specific functionality
 export function useRoomPlayers() {
   const { players, currentUserId } = useRoomState();
   return useMemo(() => ({ players, currentUserId }), [players, currentUserId]);
@@ -180,10 +168,8 @@ export function useRoomDebate() {
   const { state } = useRoomState();
   const { debateTopic, debateAnswers, playerAnswers } = useRoomGameData();
 
-  // const { debateTopic, debateAnswers, playerAnswers, selectedAnswerId } = useRoomGameData();
   const { handleSelectAnswer } = useRoomActions();
   const selectedAnswerId = state.context.selectedAnswerId;
-  // We only want to expose the countdown for the debate phase
   const isDebatePhase = state.context.phase === "debate";
 
   return useMemo(
@@ -211,7 +197,6 @@ export function useRoomVoting() {
   const { handleVote } = useRoomActions();
   const { state, candidateId } = useRoomState();
 
-  // We only want to expose the voting phase data
   const isVotingPhase = state.context.phase === "voting";
 
   return useMemo(
@@ -259,6 +244,7 @@ export function useRoomResults() {
     useRoomGameData();
   const { players, currentUserId } = useRoomState();
   const { handleNewGame, handleNextRound } = useRoomActions();
+  const isFinalRound = currentRound === totalRounds - 1;
 
   return useMemo(
     () => ({
@@ -272,6 +258,7 @@ export function useRoomResults() {
       roundsData,
       cumulativeScores,
       countdown,
+      isFinalRound,
     }),
     [
       playerScores,
@@ -284,11 +271,11 @@ export function useRoomResults() {
       roundsData,
       cumulativeScores,
       countdown,
+      isFinalRound,
     ],
   );
 }
 
-// For backward compatibility - combines all contexts
 export function useRoomContext() {
   const state = useRoomState();
   const actions = useRoomActions();
@@ -304,7 +291,6 @@ export function useRoomContext() {
   );
 }
 
-// Convenience wrapper that automatically gets roomId from route params
 export function RoomProviderWithParams({ children }: { children: ReactNode }) {
   const { roomId } = useParams({ from: "/j/$roomId" });
   return <RoomProvider roomId={roomId}>{children}</RoomProvider>;

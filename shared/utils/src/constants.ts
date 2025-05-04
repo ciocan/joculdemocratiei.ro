@@ -1,8 +1,8 @@
 // Countdown time for the lobby phase in milliseconds (5 seconds)
 export const LOBBY_COUNTDOWN_TIME = 5_000;
 
-// Countdown time for the debate phase in milliseconds (30 seconds)
-export const DEBATE_COUNTDOWN_TIME = 30_000;
+// Countdown time for the debate phase in milliseconds (60 seconds)
+export const DEBATE_COUNTDOWN_TIME = 60_000;
 
 // Countdown time for the results phase in milliseconds (60 seconds)
 export const VOTE_COUNTDOWN_TIME = 60_000;

@@ -4,7 +4,8 @@ import { LockClosedIcon } from "@radix-ui/react-icons";
 import type { GamePlayer } from "@joculdemocratiei/utils";
 
 import { UserMenu } from "@/components/user-menu";
-import { ShareButtons } from "../share";
+import { ShareButtons } from "@/components/share";
+import { useLeaveRoomSound } from "@/hooks/use-leave-room-sound";
 
 interface RoomHeaderProps {
   players: GamePlayer[];
@@ -31,6 +32,7 @@ export function RoomHeader({
   showShareButtons = true,
   handleLeaveRoom,
 }: RoomHeaderProps) {
+  const { handleLeaveRoomWithSound } = useLeaveRoomSound(handleLeaveRoom);
   return (
     <Grid columns="2" align="center" className="border-b border-accent-7 p-4">
       <Flex gap="2" align="center">
@@ -71,7 +73,7 @@ export function RoomHeader({
 
       <Flex gap="2" justify="end">
         {showShareButtons && <ShareButtons />}
-        <UserMenu handleLeaveRoom={handleLeaveRoom} />
+        <UserMenu handleLeaveRoom={handleLeaveRoomWithSound} />
       </Flex>
     </Grid>
   );

@@ -1,5 +1,11 @@
-import { Flex, IconButton, DropdownMenu, Avatar } from "@radix-ui/themes";
-import { ExitIcon, HomeIcon, PersonIcon } from "@radix-ui/react-icons";
+import { Flex, IconButton, DropdownMenu, Avatar, Slider, Switch } from "@radix-ui/themes";
+import {
+  ExitIcon,
+  HomeIcon,
+  PersonIcon,
+  SpeakerLoudIcon,
+  SpeakerOffIcon,
+} from "@radix-ui/react-icons";
 import { PaletteIcon } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -7,6 +13,8 @@ import { getCandidateAvatarUrl } from "@joculdemocratiei/utils";
 import { useUserStore } from "@/stores/user-store";
 import { gameStore } from "@/stores/game-store";
 import { useThemeStore } from "@/stores/theme-store";
+import { useSoundSettings } from "@/contexts/sound-context";
+import { useLeaveRoomSound } from "@/hooks/use-leave-room-sound";
 
 export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) {
   const navigate = useNavigate();
@@ -14,23 +22,21 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
   const gameState = gameStore.get();
   const candidateId = gameState.context.candidateId;
   const { theme, toggleTheme } = useThemeStore();
+  const { isMuted, volume, setVolume, setMuted } = useSoundSettings();
+  const { handleLeaveRoomWithSound } = useLeaveRoomSound(handleLeaveRoom);
 
   const userInitials = user ? `${user.firstName[0]}${user.lastName[0]}` : "?";
   const userName = user ? `${user.firstName} ${user.lastName}` : "Utilizator";
   const candidateImage = candidateId ? getCandidateAvatarUrl(candidateId, theme) : undefined;
 
   const navigateToHome = () => {
-    if (handleLeaveRoom) {
-      handleLeaveRoom();
-    }
+    handleLeaveRoomWithSound();
     navigate({ to: "/" });
   };
 
   const navigateToProfile = () => {
     if (user?.userId) {
-      if (handleLeaveRoom) {
-        handleLeaveRoom();
-      }
+      handleLeaveRoomWithSound();
       navigate({ to: "/u/$userId", params: { userId: user.userId } });
     }
   };
@@ -75,9 +81,35 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
             )}
           </span>
         </DropdownMenu.Item>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>
+            {isMuted ? <SpeakerOffIcon /> : <SpeakerLoudIcon />}
+            <span className="ml-2">Setări sunet</span>
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.SubContent>
+            <Flex direction="column" gap="2" p="2">
+              <Flex align="center" justify="between" gap="2">
+                <span>Sunet:</span>
+                <Switch checked={!isMuted} onCheckedChange={(checked) => setMuted(!checked)} />
+              </Flex>
+              <Flex direction="column" gap="1">
+                <span>Volum:</span>
+                <Slider
+                  defaultValue={[volume]}
+                  value={[volume]}
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  onValueChange={(newValue) => setVolume(newValue[0])}
+                  disabled={isMuted}
+                />
+              </Flex>
+            </Flex>
+          </DropdownMenu.SubContent>
+        </DropdownMenu.Sub>
         <DropdownMenu.Separator />
         {handleLeaveRoom && (
-          <DropdownMenu.Item color="red" onClick={handleLeaveRoom}>
+          <DropdownMenu.Item color="red" onClick={handleLeaveRoomWithSound}>
             <ExitIcon />
             <span className="ml-2">Părăsește camera</span>
           </DropdownMenu.Item>
