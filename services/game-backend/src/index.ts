@@ -117,6 +117,18 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
     return roundData[0];
   }
 
+  async getStalledRooms() {
+    const rooms = await this.db
+      .select({
+        id: roomsTable.id,
+      })
+      .from(roomsTable)
+      .where(lt(roomsTable.createdAt, sql`strftime('%s','now','utc','-30 minutes')`))
+      .orderBy(desc(roomsTable.createdAt));
+
+    return rooms;
+  }
+
   addLeaderboardData(event: AnalyticsEngineDataPoint) {
     try {
       this.env.LEADERBOARD.writeDataPoint(event);

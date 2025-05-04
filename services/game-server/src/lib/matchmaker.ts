@@ -13,6 +13,7 @@ interface Env {
   JWT_SECRET: string;
   MATCHMAKER: DurableObjectNamespace<Matchmaker>;
   DEBATE_ROOMS: DurableObjectNamespace<DebateRoom>;
+  RATE_LIMITER: RateLimit;
 }
 
 type GameMessage = {
@@ -136,6 +137,13 @@ export class Matchmaker extends DurableObject<Env> {
   async getRoom(roomId: string) {
     const room = await this.env.GAME_BACKEND.getRoom(roomId);
     return room;
+  }
+
+  async removeStalledRooms() {
+    const stalledRooms = await this.env.GAME_BACKEND.getStalledRooms();
+    for (const room of stalledRooms) {
+      await this.env.GAME_BACKEND.deleteRoom(room.id);
+    }
   }
 
   broadcastGameStats() {

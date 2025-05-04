@@ -12,7 +12,7 @@ import {
 } from "./lib/util";
 import { Matchmaker } from "./lib/matchmaker";
 import { DebateRoom } from "./lib/debate-room";
-import { logger, type UserProfile } from "@joculdemocratiei/utils";
+import { formatDateTime, logger, type UserProfile } from "@joculdemocratiei/utils";
 
 type Variables = {
   user: UserProfile;
@@ -122,4 +122,30 @@ app.onError((err: Error | HTTPException, c) => {
 
 export { Matchmaker, DebateRoom };
 
-export default app;
+async function scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
+  logger.info(
+    `Cron controller ${controller.cron} run at: ${formatDateTime(new Date().toISOString(), "UTC", "td")}`,
+  );
+
+  const mm = getMatchmakerStub(env);
+
+  switch (controller.cron) {
+    case "* * * * *":
+      // local trigger with curl "http://localhost:4201/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+      await mm.removeStalledRooms();
+      break;
+    case "0/5 * * * *":
+      await mm.removeStalledRooms();
+      break;
+    default:
+      logger.info(`Cron triggered: ${controller.cron}`);
+      break;
+  }
+
+  ctx.waitUntil(Promise.resolve());
+}
+
+export default {
+  fetch: app.fetch,
+  scheduled,
+};

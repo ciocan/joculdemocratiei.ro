@@ -7,6 +7,9 @@ logpush = true
 
 workers_dev = false
 
+[triggers]
+crons = ["0/5 * * * *"]
+
 [env.dev]
 routes = [
   { pattern = "dev.gs.joculdemocratiei.ro", custom_domain = true, zone_name = "joculdemocratiei.ro" }
