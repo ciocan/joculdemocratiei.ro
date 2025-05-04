@@ -12,7 +12,7 @@
   ],
   "tasks": {
     "build": {
-      "outputs": ["dist/**"]
+      "outputs": ["services/app/.output/**", "services/app/dist/**"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
