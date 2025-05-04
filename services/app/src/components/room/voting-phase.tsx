@@ -7,7 +7,6 @@ import {
   Box,
   ScrollArea,
   Callout,
-  Avatar,
   Tooltip,
   Badge,
   Progress,
@@ -23,6 +22,7 @@ import { useRoomCountdown } from "@/hooks/use-room-countdown";
 import { useVoteSounds } from "@/hooks/use-vote-sounds";
 import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
 import { cn } from "@/utils/lib";
+import { UserAvatar } from "./utils";
 
 export function VotingPhase() {
   const { players, currentUserId, candidateId, state } = useRoomState();
@@ -70,11 +70,7 @@ export function VotingPhase() {
                       hasVotedForAll && "ring-1 ring-green-9",
                     )}
                   >
-                    <Avatar
-                      fallback={player.name.slice(0, 2).toUpperCase()}
-                      size={{ initial: "1", xs: "3" }}
-                      radius="full"
-                    />
+                    <UserAvatar player={player} />
                   </Flex>
                 </Tooltip>
               </motion.div>

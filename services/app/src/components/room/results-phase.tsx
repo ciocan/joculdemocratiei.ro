@@ -28,7 +28,7 @@ import {
   MessageCircleQuestionIcon,
 } from "lucide-react";
 
-import { candidates, getCandidateAvatarUrl } from "@joculdemocratiei/utils";
+import { candidates, getCandidateAvatarUrl, isBot } from "@joculdemocratiei/utils";
 import { useThemeStore } from "@/stores/theme-store";
 import { useRoomResults } from "@/contexts/room-context";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
@@ -164,7 +164,7 @@ export function ResultsPhase() {
               >
                 <Box
                   className={cn(
-                    "w-fit border border-accent-6 bg-accent-4/10 rounded-4 p-2",
+                    "border border-accent-6 bg-accent-4/10 rounded-4 p-2",
                     isCurrentUser && "border-1 border-accent-9",
                   )}
                 >
@@ -182,8 +182,17 @@ export function ResultsPhase() {
                           )}
                         />
                         <Flex direction="column" align="start" justify="center" gap="1">
-                          <Text weight="bold" size="2">
-                            {player.name}
+                          <Text
+                            weight="bold"
+                            size="2"
+                            align="left"
+                            className={cn(
+                              "max-w-[120px] break-words",
+                              isBot(player.playerId) && "text-green-10",
+                            )}
+                          >
+                            {isBot(player.playerId) && <span className="text-lg mr-1">🤖</span>}
+                            <span>{player.name}</span>
                           </Text>
                           <Badge size="1">{candidate?.name}</Badge>
                         </Flex>
@@ -369,8 +378,19 @@ function AllRoundsAnswers() {
                                       fallback={player.name[0] || "?"}
                                       radius="full"
                                     />
-                                    <Text weight="medium" size="1">
-                                      {player.name}
+                                    <Text
+                                      size="1"
+                                      align="left"
+                                      weight="medium"
+                                      className={cn(
+                                        "break-words",
+                                        isBot(player.playerId) && "text-green-10",
+                                      )}
+                                    >
+                                      {isBot(player.playerId) && (
+                                        <span className="text-lg mr-1">🤖</span>
+                                      )}
+                                      <span>{player.name}</span>
                                     </Text>
                                   </Flex>
                                 </Table.Cell>
@@ -461,8 +481,19 @@ function AllRoundsAnswers() {
                                     fallback={player.name[0] || "?"}
                                     radius="full"
                                   />
-                                  <Text weight="bold" size="2">
-                                    {player.name}
+                                  <Text
+                                    size="2"
+                                    align="left"
+                                    weight="medium"
+                                    className={cn(
+                                      "break-words",
+                                      isBot(player.playerId) && "text-green-10",
+                                    )}
+                                  >
+                                    {isBot(player.playerId) && (
+                                      <span className="text-lg mr-1">🤖</span>
+                                    )}
+                                    <span>{player.name}</span>
                                   </Text>
                                 </Flex>
 

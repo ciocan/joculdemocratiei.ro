@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useRoomLobby, useRoomPlayers } from "@/contexts/room-context";
 import { usePlayerSounds } from "@/hooks/use-player-sounds";
 import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
+import { UserAvatar } from "./utils";
 
 function InstructionsDialog() {
   return (
@@ -116,14 +117,7 @@ export function LobbyPhase() {
                   className={`p-2 h-full ${player.isReady ? "border-2 border-accent-9" : "bg-accent-5/30"}`}
                 >
                   <Grid columns="1" gap="1" align="center" className="h-full">
-                    <Avatar
-                      size="3"
-                      fallback={player.name
-                        .split(" ")
-                        .map((word: string) => word.charAt(0).toUpperCase())
-                        .join("")}
-                      className="mx-auto"
-                    />
+                    <UserAvatar player={player} />
                     <Text weight="bold" size="1" align="center">
                       {player.name}
                     </Text>

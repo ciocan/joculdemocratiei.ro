@@ -8,6 +8,7 @@ import {
   type RoundData,
   type WsStatePayload,
   type Vote,
+  type BotPlayer,
   logger,
   computeScores,
   getRandomDebateTopic,
@@ -18,6 +19,11 @@ import {
   DEBATE_COUNTDOWN_TIME,
   NEXT_ROUND_COUNTDOWN_TIME,
   VOTE_COUNTDOWN_TIME,
+  GLOBAL_BOT_CONFIG,
+  createBotPlayer,
+  selectBotDebateAnswer,
+  determineBotVote,
+  isBot,
 } from "@joculdemocratiei/utils";
 
 import type { Matchmaker } from "./matchmaker";
@@ -265,6 +271,9 @@ export class DebateRoom extends DurableObject<Env> {
               if (this.countdownEndTime) {
                 this.ctx.storage.setAlarm(this.countdownEndTime);
               }
+
+              // Check if we need to add more bots
+              await this.checkAndAddBots();
             }
           }
 
@@ -313,7 +322,9 @@ export class DebateRoom extends DurableObject<Env> {
         if (this.phase === "results" && this.currentRound < 2) {
           this.countdownEndTime = Date.now() + NEXT_ROUND_COUNTDOWN_TIME;
           await this.saveState();
-          this.ctx.storage.setAlarm(this.countdownEndTime);
+          if (this.countdownEndTime) {
+            this.ctx.storage.setAlarm(this.countdownEndTime);
+          }
           this.broadcast();
         } else {
           logger.debug(
@@ -376,6 +387,164 @@ export class DebateRoom extends DurableObject<Env> {
     });
     await this.saveState();
     await this.env.GAME_BACKEND.addSeat(this.roomId);
+
+    // Check if we need to add bots
+    await this.checkAndAddBots();
+  }
+
+  /**
+   * Adds a bot player to the room
+   */
+  private async addBotPlayer() {
+    if (!this.roomId) {
+      logger.error("[DebateRoom:addBotPlayer] roomId not provided");
+      return;
+    }
+
+    const bot = createBotPlayer();
+    this.players.push(bot);
+    await this.saveState();
+    await this.env.GAME_BACKEND.addSeat(this.roomId);
+
+    logger.debug(`[DebateRoom:addBotPlayer] Added bot ${bot.name} to room ${this.roomId}`);
+    return bot;
+  }
+
+  /**
+   * Checks if bots should be added to the room and adds them if needed
+   */
+  private async checkAndAddBots() {
+    if (!GLOBAL_BOT_CONFIG.enabled) {
+      return;
+    }
+
+    // Count real players (non-bots)
+    const realPlayers = this.players.filter((player) => !isBot(player.playerId));
+
+    // If we have enough real players, don't add bots
+    if (realPlayers.length >= GLOBAL_BOT_CONFIG.minRealPlayers + 1) {
+      return;
+    }
+
+    // Calculate how many bots to add
+    const currentBots = this.players.filter((player) => isBot(player.playerId));
+    const totalDesiredPlayers = Math.max(3, realPlayers.length + 2); // At least 3 players total
+
+    const botsToAdd = Math.min(
+      GLOBAL_BOT_CONFIG.maxBotsPerRoom - currentBots.length,
+      totalDesiredPlayers - realPlayers.length - currentBots.length,
+    );
+
+    // Add bots
+    for (let i = 0; i < botsToAdd; i++) {
+      await this.addBotPlayer();
+    }
+
+    // Make bots ready
+    for (const player of this.players) {
+      if (isBot(player.playerId) && !player.isReady) {
+        player.isReady = true;
+      }
+    }
+
+    await this.saveState();
+    this.broadcast();
+  }
+
+  /**
+   * Handles bot actions during the debate phase
+   */
+  private async handleBotDebateActions() {
+    const currentRoundData = this.roundsData[this.currentRound];
+
+    if (!currentRoundData) {
+      return;
+    }
+
+    for (const player of this.players) {
+      // Skip if not a bot or already answered
+      if (!isBot(player.playerId) || currentRoundData.playerAnswers[player.playerId]) {
+        continue;
+      }
+
+      // Get available answers for this bot
+      const botAnswers = currentRoundData.debateAnswers[player.playerId] || [];
+      if (botAnswers.length === 0) {
+        continue;
+      }
+
+      // Select an answer based on bot's risk tolerance
+      const botPlayer = player as BotPlayer;
+      const answerId = selectBotDebateAnswer(botPlayer, botAnswers);
+
+      // Record the bot's answer
+      if (answerId) {
+        currentRoundData.playerAnswers[player.playerId] = answerId;
+        logger.debug(
+          `[DebateRoom:handleBotDebateActions] Bot ${player.name} selected answer ${answerId}`,
+        );
+      }
+    }
+
+    await this.saveState();
+    this.broadcast();
+  }
+
+  /**
+   * Handles bot actions during the voting phase
+   */
+  private async handleBotVotingActions() {
+    const currentRoundData = this.roundsData[this.currentRound];
+    if (!currentRoundData) {
+      return;
+    }
+
+    for (const player of this.players) {
+      // Skip if not a bot
+      if (!isBot(player.playerId)) {
+        continue;
+      }
+
+      const botPlayer = player as BotPlayer;
+
+      // For each player that has submitted an answer, the bot will vote
+      for (const targetPlayer of this.players) {
+        // Skip voting for self or if already voted for this player
+        if (
+          targetPlayer.playerId === player.playerId ||
+          (currentRoundData.playerVotes[player.playerId] &&
+            currentRoundData.playerVotes[player.playerId][targetPlayer.playerId])
+        ) {
+          continue;
+        }
+
+        // Skip if target player didn't submit an answer
+        if (!currentRoundData.playerAnswers[targetPlayer.playerId]) {
+          continue;
+        }
+
+        // Determine vote based on bot's personality and target's candidate
+        const vote = determineBotVote(
+          botPlayer,
+          targetPlayer.playerId,
+          targetPlayer.candidateId,
+          this.players,
+        );
+
+        // Record the bot's vote
+        if (!currentRoundData.playerVotes[player.playerId]) {
+          currentRoundData.playerVotes[player.playerId] = {};
+        }
+
+        currentRoundData.playerVotes[player.playerId][targetPlayer.playerId] = vote;
+        logger.debug(
+          `[DebateRoom:handleBotVotingActions] Bot ${player.name} voted ${vote} for ${targetPlayer.name}`,
+        );
+      }
+    }
+
+    await this.saveState();
+    this.broadcast();
   }
 
   async removePlayer(playerId: string) {
@@ -414,12 +583,30 @@ export class DebateRoom extends DurableObject<Env> {
       if (this.currentRound === 0) {
         await this.env.GAME_BACKEND.updateGameStarted(this.roomId, true);
       }
+
+      setTimeout(
+        async () => {
+          await this.handleBotDebateActions();
+        },
+        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
+          GLOBAL_BOT_CONFIG.actionDelayRange[0],
+      );
     }
 
     if (newPhase === "voting") {
       this.countdownEndTime =
         Date.now() + (this.players.length <= 3 ? VOTE_COUNTDOWN_TIME / 2 : VOTE_COUNTDOWN_TIME);
-      this.ctx.storage.setAlarm(this.countdownEndTime);
+      if (this.countdownEndTime) {
+        this.ctx.storage.setAlarm(this.countdownEndTime);
+      }
+
+      setTimeout(
+        async () => {
+          await this.handleBotVotingActions();
+        },
+        Math.floor(Math.random() * GLOBAL_BOT_CONFIG.actionDelayRange[1]) +
+          GLOBAL_BOT_CONFIG.actionDelayRange[0],
+      );
     }
 
     if (newPhase === "results") {
@@ -460,7 +647,9 @@ export class DebateRoom extends DurableObject<Env> {
 
       if (this.currentRound === 2) {
         this.countdownEndTime = Date.now() + NEXT_ROUND_COUNTDOWN_TIME;
-        this.ctx.storage.setAlarm(this.countdownEndTime);
+        if (this.countdownEndTime) {
+          this.ctx.storage.setAlarm(this.countdownEndTime);
+        }
       }
     }
 
@@ -702,8 +891,10 @@ export class DebateRoom extends DurableObject<Env> {
 
   async fetch(request: Request) {
     const url = new URL(request.url);
-    const token = url.searchParams.get("token");
     const pathRoomId = url.pathname.split("/").pop();
+
+    // Handle WebSocket connections
+    const token = url.searchParams.get("token");
 
     if (!this.roomId && pathRoomId) {
       this.roomId = pathRoomId;

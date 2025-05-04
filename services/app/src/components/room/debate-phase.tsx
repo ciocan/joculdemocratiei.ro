@@ -1,6 +1,5 @@
 import {
   Flex,
-  Avatar,
   Tooltip,
   Text,
   RadioCards,
@@ -22,6 +21,7 @@ import { useRoomCountdown } from "@/hooks/use-room-countdown";
 import { useAnswerSounds } from "@/hooks/use-answer-sounds";
 import { usePlayerLeaveSounds } from "@/hooks/use-player-leave-sounds";
 import { cn } from "@/utils/lib";
+import { UserAvatar } from "./utils";
 
 export function DebatePhase() {
   const { players } = useRoomPlayers();
@@ -64,11 +64,7 @@ export function DebatePhase() {
                       hasAnswered && "ring-1 ring-green-9",
                     )}
                   >
-                    <Avatar
-                      fallback={player.name.slice(0, 2).toUpperCase()}
-                      size={{ initial: "1", xs: "3" }}
-                      radius="full"
-                    />
+                    <UserAvatar player={player} />
                   </Flex>
                 </Tooltip>
               </motion.div>
