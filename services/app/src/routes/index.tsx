@@ -215,6 +215,14 @@ function Home() {
                       (glumim, e mereu populismul).
                     </Text>
                   </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-xl">🤖</span>
+                    <Text size="3">
+                      Nu ai destui prieteni online? Nicio problemă! Roboțeii digitali vor completa
+                      camera de joc, fiecare cu personalitatea lui unică și preferințe politice
+                      aleatorii. Îi vei recunoaște după numele lor futuristice.
+                    </Text>
+                  </li>
                 </ul>
               </Grid>
             </Card>
@@ -223,8 +231,9 @@ function Home() {
               <Grid gap="4">
                 <Heading size="3" className="text-accent-9">
                   <span className="text-xl mr-2">👥</span>Jocul e multiplayer în timp real, deci
-                  poți dezbate simultan cu până la 6 prieteni sau dușmani – dacă încă mai ai
-                  prieteni după ultimele alegeri.
+                  poți dezbate simultan cu până la 6 prieteni sau dușmani - dacă încă mai ai
+                  prieteni după ultimele alegeri. Iar dacă nu, avem roboței care te vor însoți în
+                  dezbatere, cu nume creative precum "Roboțelu Ciberneticu" sau "Bionic Bianca".
                 </Heading>
               </Grid>
             </Card>
@@ -258,7 +267,8 @@ function Home() {
                   <span className="font-bold text-accent-10">Atenție:</span> Jocul poate produce
                   efecte secundare precum: înțelegerea punctului de vedere advers, recunoașterea că
                   adevărul e undeva la mijloc și, în cazuri rare, renunțarea la comentarii agresive
-                  pe Facebook.
+                  pe Facebook. Iar roboțeii pot fi mai raționali decât utilizatorii reali, ceea ce e
+                  puțin trist, dar foarte amuzant.
                 </span>
                 <span className="italic text-accent-9">
                   Jocul Democrației:{" "}
