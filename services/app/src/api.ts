@@ -3,6 +3,18 @@ import { eventHandler, toWebRequest } from "vinxi/http";
 
 declare global {
   interface GameBackendService {
+    getUserProfileBySecretKey: (secretKey: string) => Promise<{
+      userId: string;
+      firstName: string;
+      lastName: string;
+      city: string;
+      county: string;
+      countyCode: string;
+      lat: number;
+      lon: number;
+      secretKey: string;
+      createdAt?: number;
+    } | null>;
     getUserLeaderboard: (userId: string) => Promise<{
       roundScores: {
         influence: number;

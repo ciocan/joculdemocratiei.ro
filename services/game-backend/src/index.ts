@@ -157,6 +157,14 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
     return user;
   }
 
+  async getUserProfileBySecretKey(secretKey: string) {
+    const [user] = await this.db
+      .select()
+      .from(userProfileTable)
+      .where(eq(userProfileTable.secretKey, secretKey));
+    return user;
+  }
+
   async fetch() {
     return new Response(null, { status: 200 });
   }
