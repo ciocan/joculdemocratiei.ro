@@ -16,7 +16,9 @@ export default defineConfig({
       tsConfigPaths({
         projects: ["./tsconfig.json"],
       }),
-      cfProxy({}),
+      cfProxy({
+        environment: process.env.ENVIRONMENT,
+      }),
     ],
   },
 });

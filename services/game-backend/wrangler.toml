@@ -10,20 +10,29 @@ workers_dev = false
 [observability]
 enabled = true
 
-[env.local]
-d1_databases = [
-  { binding = "DB", database_name = "joculdemocratiei-local", database_id = "n/a", migrations_dir = "src/drizzle/migrations" }
-]
+[[d1_databases]]
+binding = "DB"
+database_name = "joculdemocratiei"
+database_id = "n/a"
+migrations_dir = "src/drizzle/migrations"
 
-[env.dev]
-d1_databases = [
-  { binding = "DB", database_name = "joculdemocratiei-dev", database_id = "4f761edd-f905-4559-bace-d5d74672dcc5", migrations_dir = "src/drizzle/migrations" }
-]
+[[env.local.d1_databases]]
+binding = "DB"
+database_name = "joculdemocratiei-local"
+database_id = "n/a"
+migrations_dir = "src/drizzle/migrations"
 
-[env.production]
-d1_databases = [
-  { binding = "DB", database_name = "joculdemocratiei-production", database_id = "b15a5f7c-1ec1-4852-9b42-e590e20d2c76", migrations_dir = "src/drizzle/migrations" }
-]
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "joculdemocratiei-dev"
+database_id = "4f761edd-f905-4559-bace-d5d74672dcc5"
+migrations_dir = "src/drizzle/migrations"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "joculdemocratiei-production"
+database_id = "b15a5f7c-1ec1-4852-9b42-e590e20d2c76"
+migrations_dir = "src/drizzle/migrations"
 
 [env.local.vars]
 ENVIRONMENT = "local"
@@ -39,13 +48,31 @@ type = "Text"
 globs = ["**/*.sql"]
 fallthrough = true
 
+
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "jd_analytics_dev"
+
+[[env.local.analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "jd_analytics_dev"
+
+[[env.dev.analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "jd_analytics_dev"
+
+[[env.production.analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "jd_analytics_production"
+
+
 [[analytics_engine_datasets]]
 binding = "LEADERBOARD"
-dataset = "jd_leaderboard"
+dataset = "jd_leaderboard_dev"
 
 [[env.local.analytics_engine_datasets]]
 binding = "LEADERBOARD"
-dataset = "jd_leaderboard_local"
+dataset = "jd_leaderboard_dev"
 
 [[env.dev.analytics_engine_datasets]]
 binding = "LEADERBOARD"
@@ -55,6 +82,7 @@ dataset = "jd_leaderboard_dev"
 binding = "LEADERBOARD"
 dataset = "jd_leaderboard_production"
 
+
 [[r2_buckets]]
 binding = "DATA_BUCKET"
 bucket_name = "jocul-democratiei-data"
@@ -62,6 +90,7 @@ bucket_name = "jocul-democratiei-data"
 [[env.local.r2_buckets]]
 binding = "DATA_BUCKET"
 bucket_name = "jocul-democratiei-data"
+preview_bucket_name = "jocul-democratiei-data-dev"
 
 [[env.dev.r2_buckets]]
 binding = "DATA_BUCKET"

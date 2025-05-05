@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "dotenv -e .env -- vinxi dev --port 4200 --devtools",
+    "dev": "dotenv -e .env -- vinxi dev --port 4200 --devtools  --env local",
     "deploy:dev": "dotenv -e .env.development -- pnpm build && wrangler deploy --env dev",
     "deploy:prod": "dotenv -e .env.production -- pnpm build && wrangler deploy --env production",
     "build": "vinxi build",

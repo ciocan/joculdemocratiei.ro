@@ -20,7 +20,7 @@ enabled = true
 
 [[services]]
 binding     = "GAME_BACKEND"
-service     = "jd-game-backend-local"
+service     = "jd-game-backend"
 
 [[env.dev.services]]
 binding     = "GAME_BACKEND"

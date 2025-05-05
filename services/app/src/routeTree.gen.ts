@@ -16,6 +16,7 @@ import { Route as IncepeImport } from './routes/incepe'
 import { Route as IndexImport } from './routes/index'
 import { Route as UUserIdImport } from './routes/u/$userId'
 import { Route as JRoomIdImport } from './routes/j/$roomId'
+import { Route as UUserIdJRoomIdImport } from './routes/u_/$userId/j/$roomId'
 
 // Create/Update Routes
 
@@ -46,6 +47,12 @@ const UUserIdRoute = UUserIdImport.update({
 const JRoomIdRoute = JRoomIdImport.update({
   id: '/j/$roomId',
   path: '/j/$roomId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UUserIdJRoomIdRoute = UUserIdJRoomIdImport.update({
+  id: '/u_/$userId/j/$roomId',
+  path: '/u/$userId/j/$roomId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -88,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UUserIdImport
       parentRoute: typeof rootRoute
     }
+    '/u_/$userId/j/$roomId': {
+      id: '/u_/$userId/j/$roomId'
+      path: '/u/$userId/j/$roomId'
+      fullPath: '/u/$userId/j/$roomId'
+      preLoaderRoute: typeof UUserIdJRoomIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -99,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/joc-nou': typeof JocNouRoute
   '/j/$roomId': typeof JRoomIdRoute
   '/u/$userId': typeof UUserIdRoute
+  '/u/$userId/j/$roomId': typeof UUserIdJRoomIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -107,6 +122,7 @@ export interface FileRoutesByTo {
   '/joc-nou': typeof JocNouRoute
   '/j/$roomId': typeof JRoomIdRoute
   '/u/$userId': typeof UUserIdRoute
+  '/u/$userId/j/$roomId': typeof UUserIdJRoomIdRoute
 }
 
 export interface FileRoutesById {
@@ -116,14 +132,34 @@ export interface FileRoutesById {
   '/joc-nou': typeof JocNouRoute
   '/j/$roomId': typeof JRoomIdRoute
   '/u/$userId': typeof UUserIdRoute
+  '/u_/$userId/j/$roomId': typeof UUserIdJRoomIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/incepe' | '/joc-nou' | '/j/$roomId' | '/u/$userId'
+  fullPaths:
+    | '/'
+    | '/incepe'
+    | '/joc-nou'
+    | '/j/$roomId'
+    | '/u/$userId'
+    | '/u/$userId/j/$roomId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/incepe' | '/joc-nou' | '/j/$roomId' | '/u/$userId'
-  id: '__root__' | '/' | '/incepe' | '/joc-nou' | '/j/$roomId' | '/u/$userId'
+  to:
+    | '/'
+    | '/incepe'
+    | '/joc-nou'
+    | '/j/$roomId'
+    | '/u/$userId'
+    | '/u/$userId/j/$roomId'
+  id:
+    | '__root__'
+    | '/'
+    | '/incepe'
+    | '/joc-nou'
+    | '/j/$roomId'
+    | '/u/$userId'
+    | '/u_/$userId/j/$roomId'
   fileRoutesById: FileRoutesById
 }
 
@@ -133,6 +169,7 @@ export interface RootRouteChildren {
   JocNouRoute: typeof JocNouRoute
   JRoomIdRoute: typeof JRoomIdRoute
   UUserIdRoute: typeof UUserIdRoute
+  UUserIdJRoomIdRoute: typeof UUserIdJRoomIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -141,6 +178,7 @@ const rootRouteChildren: RootRouteChildren = {
   JocNouRoute: JocNouRoute,
   JRoomIdRoute: JRoomIdRoute,
   UUserIdRoute: UUserIdRoute,
+  UUserIdJRoomIdRoute: UUserIdJRoomIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -157,7 +195,8 @@ export const routeTree = rootRoute
         "/incepe",
         "/joc-nou",
         "/j/$roomId",
-        "/u/$userId"
+        "/u/$userId",
+        "/u_/$userId/j/$roomId"
       ]
     },
     "/": {
@@ -174,6 +213,9 @@ export const routeTree = rootRoute
     },
     "/u/$userId": {
       "filePath": "u/$userId.tsx"
+    },
+    "/u_/$userId/j/$roomId": {
+      "filePath": "u_/$userId/j/$roomId.tsx"
     }
   }
 }

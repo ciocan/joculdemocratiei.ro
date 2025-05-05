@@ -135,9 +135,9 @@ export function selectBotDebateAnswer(
 // Determine bot's vote for another player's answer
 export function determineBotVote(
   botPlayer: BotPlayer,
-  targetPlayerId: string,
+  _targetPlayerId: string,
   targetCandidateId: string | undefined,
-  players: Array<{ playerId: string; candidateId?: string }>,
+  _players: Array<{ playerId: string; candidateId?: string }>,
 ): Vote {
   // If target has no candidate, default to neutral
   if (!targetCandidateId) {

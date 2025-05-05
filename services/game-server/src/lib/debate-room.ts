@@ -1113,6 +1113,12 @@ export class DebateRoom extends DurableObject<Env> {
       this.connections.set(server, user);
       this.broadcast();
 
+      this.env.GAME_BACKEND.addAnalyticsData({
+        indexes: ["game_ws_connection"],
+        doubles: [this.players.length],
+        blobs: [this.roomId, user.userId],
+      });
+
       return new Response(null, {
         status: 101,
         webSocket: client,

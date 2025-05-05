@@ -1,5 +1,6 @@
-import { Heading, Text, Card, Grid, Flex, Table, Badge, Skeleton, Box } from "@radix-ui/themes";
+import { Heading, Text, Card, Grid, Flex, Table, Badge, Skeleton } from "@radix-ui/themes";
 import { AwardIcon, BrainIcon, HeartIcon, TrophyIcon } from "lucide-react";
+import { Link, useParams } from "@tanstack/react-router";
 
 import { formatNumber, type GameData, type LeaderboardRoundScore } from "@joculdemocratiei/utils";
 import { useUserLeaderboard } from "@/hooks/use-user-leaderboard";
@@ -181,15 +182,14 @@ function GameAccordionItem({ game, gameIndex }: { game: GameData; gameIndex: num
         </Flex>
       </AccordionTrigger>
       <AccordionContent>
-        <Box py="3" px="1">
-          <RoundsTable rounds={game.rounds} />
-        </Box>
+        <RoundsTable rounds={game.rounds} roomId={game.roomId} />
       </AccordionContent>
     </AccordionItem>
   );
 }
 
-function RoundsTable({ rounds }: { rounds: LeaderboardRoundScore[] }) {
+function RoundsTable({ rounds, roomId }: { rounds: LeaderboardRoundScore[]; roomId: string }) {
+  const { userId } = useParams({ from: "/u/$userId" });
   return (
     <Table.Root>
       <Table.Header>
@@ -234,6 +234,17 @@ function RoundsTable({ rounds }: { rounds: LeaderboardRoundScore[] }) {
           </Table.Row>
         ))}
       </Table.Body>
+      <tfoot>
+        <Table.Row>
+          <Table.Cell colSpan={5} align="center">
+            <Link to="/u/$userId/j/$roomId" params={{ roomId, userId }}>
+              <Text size="2" weight="bold" className="text-accent-9 hover:underline">
+                Vezi jocul complet
+              </Text>
+            </Link>
+          </Table.Cell>
+        </Table.Row>
+      </tfoot>
     </Table.Root>
   );
 }

@@ -12,16 +12,13 @@ import {
   type GameHistoryTable,
 } from "@joculdemocratiei/utils";
 
-import { getUserLeaderboardData, getUserFinalLeaderboardData, testQuery } from "./lib/leaderboards";
-
-export interface Env {
-  DB: D1Database;
-  LEADERBOARD: AnalyticsEngineDataset;
-  CLOUDFLARE_ACCOUNT_ID: string;
-  CLOUDFLARE_API_TOKEN: string;
-  ENVIRONMENT: "local" | "dev" | "production";
-  DATA_BUCKET: R2Bucket;
-}
+import {
+  getUserLeaderboardData,
+  getUserFinalLeaderboardData,
+  getGameRoundData,
+  getGameFinalData,
+  testQuery,
+} from "./lib/leaderboards";
 
 export default class GameBackend extends WorkerEntrypoint<Env> {
   private db = drizzle(this.env.DB);
@@ -137,6 +134,14 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
     }
   }
 
+  addAnalyticsData(event: AnalyticsEngineDataPoint) {
+    try {
+      this.env.ANALYTICS.writeDataPoint(event);
+    } catch (error) {
+      console.error("Error adding analytics data:", error);
+    }
+  }
+
   async getUserProfile(userId: string) {
     const [user] = await this.db
       .select({
@@ -154,44 +159,6 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
 
   async fetch() {
     return new Response(null, { status: 200 });
-  }
-
-  async getUserLeaderboardTest() {
-    return {
-      roundScores: Array.from({ length: 3 }, (_, i) => ({
-        influence: Math.floor(Math.random() * 10000),
-        empathy: Math.floor(Math.random() * 10000),
-        harmony: Math.floor(Math.random() * 10000),
-        totalScore: Math.floor(Math.random() * 30000),
-        agreeVotes: Math.floor(Math.random() * 20),
-        neutralVotes: Math.floor(Math.random() * 10),
-        disagreeVotes: Math.floor(Math.random() * 5),
-        roundNumber: i + 1,
-        debateTopic: `Mock Topic ${i + 1}`,
-        debateQuestion: `Mock Question for round ${i + 1}?`,
-        answer: Math.random() > 0.5 ? `Mock Answer ${i + 1}` : null,
-      })),
-      cumulativeScores: Array.from({ length: 3 }, (_, i) => ({
-        influence: Math.floor(Math.random() * 20000),
-        empathy: Math.floor(Math.random() * 20000),
-        harmony: Math.floor(Math.random() * 20000),
-        totalScore: Math.floor(Math.random() * 60000),
-        agreeVotes: Math.floor(Math.random() * 40),
-        neutralVotes: Math.floor(Math.random() * 20),
-        disagreeVotes: Math.floor(Math.random() * 10),
-        roundNumber: i + 1,
-        debateTopic: `Mock Topic ${i + 1}`,
-        debateQuestion: `Mock Question for round ${i + 1}?`,
-      })),
-      finalScores: {
-        influence: Math.floor(Math.random() * 30000),
-        empathy: Math.floor(Math.random() * 30000),
-        harmony: Math.floor(Math.random() * 30000),
-        totalScore: Math.floor(Math.random() * 90000),
-        totalPlayers: Math.floor(Math.random() * 50) + 10,
-        rank: Math.floor(Math.random() * 10) + 1,
-      },
-    };
   }
 
   async testQuery(query: string) {
@@ -213,7 +180,8 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
         agreeVotes: row.agreeVotes as number,
         neutralVotes: row.neutralVotes as number,
         disagreeVotes: row.disagreeVotes as number,
-        roundNumber: Number.parseInt(row.roundNumber as string, 10),
+        // Add 1 to roundNumber since it's 0-indexed in the database but 1-indexed in the UI
+        roundNumber: Number.parseInt(row.roundNumber as string, 10) + 1,
         debateTopic: (row.debateTopic as string) || "",
         debateQuestion: (row.debateQuestion as string) || "",
         answer: row.answer as string | null,
@@ -258,6 +226,131 @@ export default class GameBackend extends WorkerEntrypoint<Env> {
       };
     } catch (error) {
       console.error("Error fetching user leaderboard:", error);
+      throw error;
+    }
+  }
+
+  async getGameDetails(roomId: string) {
+    try {
+      const [roundScoresResult, finalScoresResult] = await Promise.all([
+        getGameRoundData(this.env, roomId),
+        getGameFinalData(this.env, roomId),
+      ]);
+
+      // Process round data
+      const roundsData = roundScoresResult.data.map((row) => ({
+        influence: row.influence as number,
+        empathy: row.empathy as number,
+        harmony: row.harmony as number,
+        totalScore: row.totalScore as number,
+        agreeVotes: row.agreeVotes as number,
+        neutralVotes: row.neutralVotes as number,
+        disagreeVotes: row.disagreeVotes as number,
+        // Add 1 to roundNumber since it's 0-indexed in the database but 1-indexed in the UI
+        roundNumber: Number.parseInt(row.roundNumber as string, 10) + 1,
+        debateTopic: (row.topicId as string) || "",
+        debateQuestion: (row.question as string) || "",
+        answer: row.answer as string | null,
+        playerId: row.playerId as string,
+        playerName: row.playerName as string,
+        candidateId: row.candidateId as string,
+        city: row.city as string,
+        county: row.county as string,
+        countyCode: row.countyCode as string,
+      }));
+
+      // Group by player
+      const playerMap = new Map<
+        string,
+        {
+          playerId: string;
+          playerName: string;
+          candidateId: string;
+          city: string;
+          county: string;
+          countyCode: string;
+          rounds: {
+            roundNumber: number;
+            influence: number;
+            empathy: number;
+            harmony: number;
+            totalScore: number;
+            agreeVotes: number;
+            neutralVotes: number;
+            disagreeVotes: number;
+            debateTopic: string;
+            debateQuestion: string;
+            answer: string | null;
+          }[];
+        }
+      >();
+
+      // Process players and their rounds
+      for (const round of roundsData) {
+        if (!playerMap.has(round.playerId)) {
+          playerMap.set(round.playerId, {
+            playerId: round.playerId,
+            playerName: round.playerName,
+            candidateId: round.candidateId,
+            city: round.city,
+            county: round.county,
+            countyCode: round.countyCode,
+            rounds: [],
+          });
+        }
+
+        playerMap.get(round.playerId)?.rounds.push({
+          roundNumber: round.roundNumber,
+          influence: round.influence,
+          empathy: round.empathy,
+          harmony: round.harmony,
+          totalScore: round.totalScore,
+          agreeVotes: round.agreeVotes,
+          neutralVotes: round.neutralVotes,
+          disagreeVotes: round.disagreeVotes,
+          debateTopic: round.debateTopic,
+          debateQuestion: round.debateQuestion,
+          answer: round.answer,
+        });
+      }
+
+      // Sort rounds within each player
+      for (const player of playerMap.values()) {
+        player.rounds.sort((a, b) => a.roundNumber - b.roundNumber);
+      }
+
+      // Process final scores
+      const finalScores = finalScoresResult.data.map((row) => ({
+        playerId: row.playerId as string,
+        playerName: row.playerName as string,
+        candidateId: row.candidateId as string,
+        influence: row.influence as number,
+        empathy: row.empathy as number,
+        harmony: row.harmony as number,
+        totalScore: row.totalScore as number,
+        rank: Number.parseInt(row.rank as string, 10),
+        city: row.city as string,
+        county: row.county as string,
+        countyCode: row.countyCode as string,
+      }));
+
+      // Sort final scores by rank
+      finalScores.sort((a, b) => a.rank - b.rank);
+
+      // Get total rounds from the first player's rounds length
+      const totalRounds =
+        playerMap.size > 0
+          ? Math.max(...Array.from(playerMap.values()).map((p) => p.rounds.length))
+          : 0;
+
+      return {
+        roomId,
+        players: Array.from(playerMap.values()),
+        finalScores,
+        totalRounds,
+      };
+    } catch (error) {
+      console.error("Error fetching game details:", error);
       throw error;
     }
   }
