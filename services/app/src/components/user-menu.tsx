@@ -155,7 +155,7 @@ export function UserMenu({ handleLeaveRoom }: { handleLeaveRoom?: () => void }) 
               <DropdownMenu.Separator />
               <DropdownMenu.Item color="red" onClick={handleLeaveRoomWithSound}>
                 <ExitIcon />
-                <span className="ml-2">Părăsește camera</span>
+                <span className="ml-2">Părăsește jocul</span>
               </DropdownMenu.Item>
             </>
           )}

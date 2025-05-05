@@ -129,7 +129,7 @@ Proiectul este structurat ca un monorepo folosind pnpm workspaces, cu următoare
 
 ### Mecanismul jocului
 
-#### State machine pentru camera de joc
+#### State machine pentru joc
 
 Jocul folosește XState v5 pentru a gestiona stările și tranzițiile. Principalele stări sunt:
 
@@ -140,7 +140,7 @@ Jocul folosește XState v5 pentru a gestiona stările și tranzițiile. Principa
 5. **results**: Se afișează rezultatele rundei
 6. **gameOver**: Jocul s-a încheiat (după 3 runde)
 
-Diagrama state machine pentru camera de joc:
+Diagrama state machine pentru joc:
 
 ```mermaid
 stateDiagram-v2
@@ -182,9 +182,9 @@ stateDiagram-v2
 
 #### Fluxul de joc pas cu pas
 
-1. **Creare cameră**:
-   - Un jucător creează o cameră nouă sau se alătură uneia existente
-   - Matchmaker DO gestionează listarea și alocarea camerelor
+1. **Creare joc**:
+   - Un jucător creează un joc nou sau se alătură unui joc existent
+   - Matchmaker DO gestionează listarea și alocarea jocurilor
 
 2. **Lobby**:
    - Jucătorii își aleg candidații politici
@@ -207,7 +207,7 @@ stateDiagram-v2
    - Jocul continuă pentru 3 runde cu teme diferite
    - Scorurile cumulative sunt actualizate după fiecare rundă
 
-Secvența de creare și alăturare la o cameră:
+Secvența de creare și alăturare la un joc:
 ```mermaid
 sequenceDiagram
     participant Client
@@ -247,11 +247,11 @@ sequenceDiagram
 
     Note over Client: Error Handling
     alt Room Full
-        Gateway-->>Client: 404 "camera este plină"
+        Gateway-->>Client: 404 "jocul este plin"
     else Room Started
-        Gateway-->>Client: 404 "camera a început"
+        Gateway-->>Client: 404 "jocul a început"
     else No Available Rooms
-        Gateway-->>Client: 404 "Nu există camere disponibile"
+        Gateway-->>Client: 404 "Nu există jocuri disponibile"
     end
 ```
 ### Algoritmul de scoring
@@ -353,7 +353,7 @@ Sistemul folosește mai multe tehnologii pentru stocarea și analiza datelor:
        disagreeVotes,            // double7: Voturi de dezacord
      ],
      blobs: [
-       roomId,                   // blob1: ID camera
+       roomId,                   // blob1: ID joc (camera)
        playerId,                 // blob2: ID jucător
        playerName,               // blob3: Nume jucător
        answerId,                 // blob4: ID răspuns
@@ -383,7 +383,7 @@ Sistemul folosește mai multe tehnologii pentru stocarea și analiza datelor:
        disagreeVotes               // double7: Voturi de dezacord
      ],
      blobs: [
-       roomId,                     // blob1: ID camera
+       roomId,                     // blob1: ID joc (camera)
        playerId,                   // blob2: ID jucător
        playerName,                 // blob3: Nume jucător
        candidateId,                // blob4: ID candidat
@@ -409,7 +409,7 @@ Sistemul folosește mai multe tehnologii pentru stocarea și analiza datelor:
        totalPlayers               // double5: Număr total jucători
      ],
      blobs: [
-       roomId,                    // blob1: ID camera
+       roomId,                    // blob1: ID joc (camera)
        playerId,                  // blob2: ID jucător
        playerName,                // blob3: Nume jucător
        candidateId,               // blob4: ID candidat
@@ -480,9 +480,9 @@ Datele salvate în joc includ:
    - Voturile acordate
    - Scorurile obținute
 
-3. **Camere active**:
-   - Lista camerelor disponibile
-   - Numărul de jucători în fiecare cameră
+3. **Jocuri active**:
+   - Lista jocurilor disponibile
+   - Numărul de jucători în fiecare joc
    - Starea jocului
 
 Datele sunt stocate în:

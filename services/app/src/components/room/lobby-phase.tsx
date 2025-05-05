@@ -82,14 +82,14 @@ export function LobbyPhase() {
         <Grid columns="2" gap="2">
           <Heading size="2" className="flex items-center gap-2">
             {isPrivate && <LockClosedIcon color="gray" />}
-            Camera așteptare
+            Joc în așteptare
           </Heading>
           <Badge color="green" variant="soft" size="1" className="w-fit justify-self-end">
             Așteptând jucători
           </Badge>
           <Text size="2" color="gray" className="col-span-2">
             {isPrivate
-              ? "Această cameră este privată. Doar jucătorii cu link de joc pot participa."
+              ? "Acest joc este privat. Doar jucătorii cu link de joc pot participa."
               : "Așteptăm alți jucători să se conecteze pentru a începe jocul."}
           </Text>
         </Grid>

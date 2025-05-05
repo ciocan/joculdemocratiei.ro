@@ -108,8 +108,8 @@ function RouteComponent() {
                         <Heading size="3">Creează un joc nou</Heading>
                         <RoomInfoDialog title="Despre crearea unui joc nou">
                           <Text size="3">
-                            Creează un joc nou și invită prietenii să se alăture. Poți face camera
-                            privată pentru a permite doar invitaților să se alăture, sau publică
+                            Creează un joc nou și invită prietenii să se alăture. Poți face jocul
+                            privat pentru a permite doar invitaților să se alăture, sau public
                             pentru a permite oricui să se alăture.
                           </Text>
                         </RoomInfoDialog>
@@ -120,7 +120,7 @@ function RouteComponent() {
                           onCheckedChange={(checked) => handleSetPrivateRoom(checked as boolean)}
                           size="3"
                         />
-                        <Text size="2">Cameră privată (doar invitați)</Text>
+                        <Text size="2">Joc privat (doar invitați)</Text>
                       </Flex>
                       <Button
                         size="3"
@@ -139,7 +139,7 @@ function RouteComponent() {
                         <Heading size="3">Alătură-te unui joc</Heading>
                         <RoomInfoDialog title="Despre alăturarea la un joc">
                           <Text size="3">
-                            Vei fi alocat aleator într-o cameră publică cu alți jucători.
+                            Vei fi alocat aleator într-un joc public cu alți jucători.
                           </Text>
                         </RoomInfoDialog>
                       </Flex>

@@ -55,13 +55,13 @@ app.post("/api/join-random", async (c) => {
       return c.json(
         {
           error:
-            "Nu există camere disponibile în acest moment. Poți crea o cameră nouă sau încearcă din nou mai târziu.",
+            "Nu există jocuri disponibile în acest moment. Poți crea un joc nou sau încearcă din nou mai târziu.",
         },
         404,
       );
     }
     logger.error("Error joining room:", error);
-    return c.json({ error: "Eroare la alăturarea la o cameră" }, 500);
+    return c.json({ error: "Eroare la alăturarea unui joc" }, 500);
   }
 });
 
@@ -76,15 +76,15 @@ app.get("/api/ws-url/:roomId", async (c) => {
   const room = await mm.getRoom(roomId);
 
   if (!room) {
-    return c.json({ error: "camera nu există" }, 404);
+    return c.json({ error: "jocul nu există" }, 404);
   }
 
   if (room.seats >= 6) {
-    return c.json({ error: "camera este plină" }, { status: 404 });
+    return c.json({ error: "jocul este plin" }, { status: 404 });
   }
 
   if (room.isStarted) {
-    return c.json({ error: "camera a început" }, { status: 404 });
+    return c.json({ error: "jocul a început" }, { status: 404 });
   }
 
   const wsUrl = buildWsUrl(c.req.raw, roomId);

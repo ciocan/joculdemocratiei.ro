@@ -65,7 +65,7 @@ export function useGameRoom() {
         console.error("Error parsing error response:", e);
       }
 
-      toast.error("Eroare la alăturarea la o cameră");
+      toast.error("Eroare la alăturarea unui joc");
     },
   });
 

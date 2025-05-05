@@ -80,10 +80,10 @@ function RoomContent() {
             <Card>
               <Grid columns="1" gap="4" align="center" p="4">
                 <Heading size="6" align="center">
-                  Nu poți participa la această cameră
+                  Nu poți participa la acest joc
                 </Heading>
                 <Text align="center" color="gray">
-                  Camera nu există sau nu ai permisiunea să te conectezi.
+                  Jocul nu există sau nu ai permisiunea să te conectezi.
                 </Text>
                 <Button onClick={handleNewGame} size="3">
                   Începe joc nou

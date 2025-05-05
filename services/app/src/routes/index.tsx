@@ -219,8 +219,8 @@ function Home() {
                     <span className="text-xl">🤖</span>
                     <Text size="3">
                       Nu ai destui prieteni online? Nicio problemă! Roboțeii digitali vor completa
-                      camera de joc, fiecare cu personalitatea lui unică și preferințe politice
-                      aleatorii. Îi vei recunoaște după numele lor futuristice.
+                      jocul, fiecare cu personalitatea lui unică și preferințe politice aleatorii.
+                      Îi vei recunoaște după numele lor futuristice.
                     </Text>
                   </li>
                 </ul>
